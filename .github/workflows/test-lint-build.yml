@@ -1,0 +1,55 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  frontend-checks:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      # Шаг 3: Установка зависимостей
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci
+
+      # Шаг 4: Запуск Prettier для проверки форматирования
+      - name: Run Prettier check
+        working-directory: ./frontend
+        run: npm run format:check
+
+      # Шаг 5: Запуск линтера
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: npm run lint
+
+      # Шаг 6: Запуск тестов
+      - name: Run tests
+        working-directory: ./frontend
+        run: npm test
+
+      # Шаг 7: Сборка проекта
+      - name: Build project
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Post-process results
+        run: echo "Frontend CI complete!"

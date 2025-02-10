@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "husky": "^9.1.7"
+  },
+  "scripts": {
+    "start": "concurrently \"npm run start-server\" \"npm run start-frontend\"",
+    "start-server": "cd server && npm start",
+    "start-frontend": "cd frontend && npm run dev",
+    "prepare": "husky"
+  }
+}
