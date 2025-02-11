@@ -11,75 +11,8 @@ const ItemTypes = {
 const app = express();
 app.use(bodyParser.json());
 
-
-let items = [
-  {
-    id: 0,
-    name: "Квартира в центре города",
-    description: "Просторная квартира с новым ремонтом.",
-    location: "Москва",
-    type: "Недвижимость",
-    propertyType: "Квартира",
-    area: 60,
-    rooms: 2,
-    price: 8000000,
-  },
-  {
-    id: 1,
-    name: "Новый автомобиль",
-    description: "Продается новый автомобиль, пробег 0.",
-    location: "Санкт-Петербург",
-    type: "Авто",
-    brand: "Toyota",
-    model: "Camry",
-    year: 2022,
-    mileage: 0,
-    price: 2500000,
-  },
-  {
-    id: 2,
-    name: "Услуги репетитора",
-    description: "Опытный репетитор по математике и физике.",
-    location: "Казань",
-    type: "Услуги",
-    serviceType: "Репетиторство",
-    experience: 5,
-    cost: 1500,
-  },
-  {
-    id: 3,
-    name: "Просторный дом",
-    description: "Дом с участком 10 соток.",
-    location: "Екатеринбург",
-    type: "Недвижимость",
-    propertyType: "Дом",
-    area: 150,
-    rooms: 5,
-    price: 15000000,
-  },
-  {
-    id: 4,
-    name: "Скутер",
-    description: "Скутер в отличном состоянии.",
-    location: "Москва",
-    type: "Авто",
-    brand: "Honda",
-    model: "Dio",
-    year: 2020,
-    mileage: 5000,
-    price: 70000,
-  },
-  {
-    id: 5,
-    name: "Услуги фотографа",
-    description: "Профессиональная фотосессия.",
-    location: "Нижний Новгород",
-    type: "Услуги",
-    serviceType: "Фотография",
-    experience: 3,
-    cost: 5000,
-  },
-];
+// In-memory хранилище для объявлений
+let items = [];
 
 const makeCounter = () => {
   let count = 0;
@@ -136,20 +69,9 @@ app.post("/items", (req, res) => {
   res.status(201).json(item);
 });
 
-// Получение всех объявлений с пагинацией
+// Получение всех объявлений
 app.get("/items", (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-
-  const paginatedItems = items.slice(startIndex, endIndex);
-
-  res.json({
-    totalItems: items.length,
-    totalPages: Math.ceil(items.length / limit),
-    currentPage: Number(page),
-    items: paginatedItems,
-  });
+  res.json(items);
 });
 
 // Получение объявления по его id
@@ -195,5 +117,5 @@ if (process.env.NODE_ENV === "development") {
 const PORT = process.env.BACKEND_PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server mode: ${process.env.NODE_ENV} is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

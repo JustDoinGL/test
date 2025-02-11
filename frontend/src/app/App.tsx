@@ -1,5 +1,5 @@
-import { PATHS } from '@/assets';
-import { FormPage, ItemPage, ListPage, MainLayout, NotFoundPage } from '@/pages';
+import { MainLayout, PATHS } from '@/assets';
+import { FormPage, ItemPage, ListPage, NotFoundPage } from '@/pages';
 import { Navigate, Route, Routes } from 'react-router';
 
 function App() {

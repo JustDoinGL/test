@@ -1,26 +1,18 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { screen } from '@testing-library/react';
 import App from './App';
 import { PATHS } from '@/assets';
+import { renderWithProviders } from '@/shared';
 
 describe('App routing', () => {
   test('renders ListPage on /list route', () => {
-    render(
-      <MemoryRouter initialEntries={[PATHS.mainPage]}>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProviders(<App />, { initialEntries: [PATHS.mainPage] });
 
     const element = screen.getByTestId(PATHS.mainPage);
     expect(element).toBeInTheDocument();
   });
 
   test('renders FormPage on /form route', () => {
-    render(
-      <MemoryRouter initialEntries={[PATHS.formPage]}>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProviders(<App />, { initialEntries: [PATHS.formPage] });
 
     const element = screen.getByTestId(PATHS.formPage);
     expect(element).toBeInTheDocument();
@@ -28,22 +20,14 @@ describe('App routing', () => {
 
   test('renders ItemPage on /item/:id route', () => {
     const itemId = '123';
-    render(
-      <MemoryRouter initialEntries={[`${PATHS.itemPage}/${itemId}`]}>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProviders(<App />, { initialEntries: [`${PATHS.itemPage}/${itemId}`] });
 
     const element = screen.getByTestId(PATHS.itemPage);
     expect(element).toBeInTheDocument();
   });
 
   test('renders NotFoundPage on invalid route', () => {
-    render(
-      <MemoryRouter initialEntries={['/invalid-route']}>
-        <App />
-      </MemoryRouter>
-    );
+    renderWithProviders(<App />, { initialEntries: ['/invalid-route'] });
 
     const element = screen.getByTestId('NotFoundPage');
     expect(element).toBeInTheDocument();
