@@ -4,7 +4,7 @@
 
 ## Настройка окружения
 
-Перед началом работы необходимо создать файлы `.env.development` и `.env.production` рядом с примерами (`.env.primer.development` и `.env.primer.production`) и указать желаемый порт работы бэкенда и фронтенда. Главное отличие это в проде нет console.log из-за плагина вита, а в dev есть. И запуск dev это обычный запуск vite, а prod - previem.
+## Перед началом работы необходимо создать файлы `.env.development` и `.env.production` рядом с примерами (`.env.primer.development` и `.env.primer.production`) и указать желаемый порт работы бэкенда и фронтенда. Главное отличие это в проде нет console.log из-за плагина вита, а в dev есть. И запуск dev это обычный запуск vite, а prod - previem.
 
 # Также в проекте используется **Husky** для прикомита и CI через GitHub Actions.
 

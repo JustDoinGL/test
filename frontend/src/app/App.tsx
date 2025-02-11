@@ -1,18 +1,20 @@
-import { useState } from 'react';
+import { PATHS } from '@/assets';
+import { FormPage, ItemPage, ListPage, MainLayout, NotFoundPage } from '@/pages';
+import { Navigate, Route, Routes } from 'react-router';
 
 function App() {
-  const [count, setCount] = useState(0);
-  console.log('2222');
-  const BASE_URL = import.meta.env.BACKEND_URL;
-
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div>
-        {BASE_URL}
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-      </div>
-    </>
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path={'/'} element={<Navigate to='/list' replace />} />
+
+        <Route path={PATHS.mainPage} element={<ListPage />} />
+        <Route path={PATHS.formPage} element={<FormPage />} />
+        <Route path={`${PATHS.itemPage}/:id`} element={<ItemPage />} />
+      </Route>
+
+      <Route path='*' element={<NotFoundPage />} />
+    </Routes>
   );
 }
 
