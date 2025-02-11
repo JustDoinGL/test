@@ -13,7 +13,7 @@ const globalStyles = {
   },
 };
 
-export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CustomThemeProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />

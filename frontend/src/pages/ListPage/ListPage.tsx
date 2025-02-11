@@ -1,15 +1,18 @@
 import { PATHS } from '@/assets';
 import { TextWithLinkButton } from '@/ui';
-import { Box } from '@mui/material';
+import { Container } from '@mui/material';
 
 export const ListPage = () => {
   return (
-    <Box data-testid={PATHS.mainPage} sx={{ margin: '0 auto', textAlign: 'center' }}>
+    <Container
+      data-testid={PATHS.mainPage}
+      sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
+    >
       <TextWithLinkButton
         text='Вы можете создать новое объявление'
         buttonText='Создать объявление'
         buttonLink={PATHS.formPage}
       />
-    </Box>
+    </Container>
   );
 };
