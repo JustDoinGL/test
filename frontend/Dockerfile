@@ -1,15 +1,11 @@
 FROM node-base
 
-WORKDIR /app
-
 COPY package*.json ./
 
 RUN npm install
 
 COPY . .
 
-RUN npm run build
+EXPOSE ${FRONTEND_PORT:-8080}
 
-EXPOSE 8080
-
-CMD ["npm","run", "dev"]
+CMD ["sh", "-c", "npm run ${MODE:-dev}"]

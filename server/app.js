@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
 
 const ItemTypes = {
   REAL_ESTATE: "Недвижимость",
@@ -107,7 +108,13 @@ app.delete("/items/:id", (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
+if (process.env.NODE_ENV === "development") {
+  dotenv.config({ path: "../.env.development" });
+} else {
+  dotenv.config({ path: "../.env.production" });
+}
+
+const PORT = process.env.BACKEND_PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

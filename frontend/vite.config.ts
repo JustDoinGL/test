@@ -1,23 +1,74 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import removeConsole from 'vite-plugin-remove-console';
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
-  server: {
-    watch: {
-      usePolling: true,
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '');
+  const frontendPort = parseInt(env.FRONTEND_PORT || '8080');
+  const backendUrl = `http://localhost:${env.BACKEND_PORT}`;
+
+  console.log('Mode:', mode);
+  console.log('Frontend port:', frontendPort);
+  console.log('Backend URL:', backendUrl);
+
+  return {
+    plugins: [react(), tsconfigPaths(), removeConsole()],
+    server: {
+      proxy: {
+        '/api': {
+          target: backendUrl,
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+      watch: {
+        usePolling: true,
+      },
+      host: true,
+      strictPort: true,
+      port: frontendPort,
     },
-    host: true,
-    strictPort: true,
-    port: 8080,
-  },
-  test: {
-    globals: true,
-    environment: 'happy-dom',
-    setupFiles: ['src/shared/testSetup/setupTest.ts'],
-  },
+    preview: {
+      proxy: {
+        '/api': {
+          target: backendUrl,
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+      },
+      watch: {
+        usePolling: true,
+      },
+      host: true,
+      strictPort: true,
+      port: frontendPort,
+    },
+    build: {
+      proxy: {
+        '/api': {
+          target: backendUrl,
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+      // port: frontendPort,
+      minify: false,
+      outDir: 'dist',
+      sourcemap: true,
+    },
+    test: {
+      globals: true,
+      environment: 'happy-dom',
+      setupFiles: ['src/shared/testSetup/setupTest.ts'],
+    },
+    define: {
+      'import.meta.env.BACKEND_URL': JSON.stringify(backendUrl),
+      'import.meta.env.MODE': JSON.stringify(mode),
+    },
+  };
 });

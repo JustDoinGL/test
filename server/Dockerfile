@@ -1,13 +1,17 @@
+
 FROM node-base
 
-WORKDIR /app
 
 COPY package*.json ./
 
+
 RUN npm install
+
 
 COPY . .
 
-EXPOSE 5000
+
+EXPOSE ${BACKEND_PORT:-3000}
+
 
 CMD ["npm", "start"]
