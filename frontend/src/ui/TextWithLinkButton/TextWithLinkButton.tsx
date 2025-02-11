@@ -11,7 +11,7 @@ export const TextWithLinkButton = ({ text, buttonText, buttonLink }: TextWithLin
   return (
     <Box sx={{ display: 'flex', gap: '20px', justifyContent: 'center', alignItems: 'center' }}>
       <Typography variant='h6'>{text}</Typography>
-      <Button component={Link} to={buttonLink} variant='contained'>
+      <Button component={Link} to={buttonLink} variant='text'>
         {buttonText}
       </Button>
     </Box>

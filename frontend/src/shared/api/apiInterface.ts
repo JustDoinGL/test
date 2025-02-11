@@ -18,7 +18,7 @@ export const jsonApiInstance = async <T>(url: string, init?: RequestInit & { jso
     init.body = JSON.stringify(init.json);
   }
 
-  const result = await fetch(`${BASE_URL}${url}`, {
+  const result = await fetch(`/api${BASE_URL}${url}`, {
     ...init,
     headers,
   });

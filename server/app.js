@@ -139,6 +139,7 @@ app.post("/items", (req, res) => {
 // Получение всех объявлений с пагинацией
 app.get("/items", (req, res) => {
   const { page = 1, limit = 10 } = req.query;
+  console.log(req.query)
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 

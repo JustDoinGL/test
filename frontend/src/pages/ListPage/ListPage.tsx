@@ -1,6 +1,7 @@
 import { PATHS } from '@/assets';
 import { TextWithLinkButton } from '@/ui';
 import { Container } from '@mui/material';
+import CardModule from 'src/modules/CardModule/CardsInfinityScroll';
 
 export const ListPage = () => {
   return (
@@ -13,6 +14,8 @@ export const ListPage = () => {
         buttonText='Создать объявление'
         buttonLink={PATHS.formPage}
       />
+
+      <CardModule />
     </Container>
   );
 };

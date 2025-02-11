@@ -8,9 +8,11 @@ const SCNavLink = styled(NavLink)`
   text-decoration: none;
   padding: 10px 15px;
   border-radius: 4px;
+
   &.active {
     background-color: #1976d2;
   }
+
   &:hover {
     background-color: rgba(255, 255, 255, 0.1);
   }

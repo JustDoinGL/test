@@ -10,7 +10,7 @@ createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <CustomThemeProvider>
-        <ErrorBoundary fallback={<CustomError errorText='Перезагрузите страницу пожалуйста.' />}>
+        <ErrorBoundary fallback={<CustomError />}>
           <App />
         </ErrorBoundary>
       </CustomThemeProvider>
