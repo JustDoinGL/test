@@ -1,4 +1,4 @@
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles } from '@mui/material';
 import { darkTheme } from '@/assets';
 
@@ -15,10 +15,10 @@ const globalStyles = {
 
 export const CustomThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <MuiThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <GlobalStyles styles={globalStyles} />
       {children}
-    </MuiThemeProvider>
+    </ThemeProvider>
   );
 };

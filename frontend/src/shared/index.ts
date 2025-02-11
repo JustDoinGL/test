@@ -1,3 +1,3 @@
-export { CustomThemeProvider } from './providers/ThemeProvider';
+export { CustomThemeProvider } from './providers/CustomThemeProvider';
 
 export { queryClient } from './api/queryClient';
