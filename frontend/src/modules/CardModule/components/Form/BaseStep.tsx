@@ -1,6 +1,7 @@
 import { useFormContext } from 'react-hook-form';
 import { TextField, MenuItem, Box } from '@mui/material';
 import { CardUpdateFirst } from '../../types/cardSchema';
+import { CardTypes } from '@/assets';
 
 export const BaseStep = () => {
   const { register, formState } = useFormContext<CardUpdateFirst>();
@@ -40,9 +41,9 @@ export const BaseStep = () => {
         error={!!errors.type}
         helperText={errors.type?.message?.toString()}
       >
-        <MenuItem value='Недвижимость'>Недвижимость</MenuItem>
-        <MenuItem value='Авто'>Авто</MenuItem>
-        <MenuItem value='Услуги'>Услуги</MenuItem>
+        <MenuItem value={CardTypes.REAL_ESTATE}>{CardTypes.REAL_ESTATE}</MenuItem>
+        <MenuItem value={CardTypes.AUTO}>{CardTypes.AUTO}</MenuItem>
+        <MenuItem value={CardTypes.SERVICES}>{CardTypes.SERVICES}</MenuItem>
       </TextField>
     </Box>
   );
