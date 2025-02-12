@@ -1,10 +1,10 @@
-import { Box } from '@mui/material';
+import { Box, SxProps, Theme } from '@mui/material';
 
 interface CustomTextEllipsisProps {
   predText?: string;
   text: string;
   lines?: number;
-  sx?: object;
+  sx?: SxProps<Theme>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component?: React.ElementType<any, keyof React.JSX.IntrinsicElements>;
 }
