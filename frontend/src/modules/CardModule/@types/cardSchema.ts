@@ -1,3 +1,4 @@
+import { CardTypes } from '@/assets';
 import { z } from 'zod';
 
 const baseSchema = z.object({
@@ -9,7 +10,7 @@ const baseSchema = z.object({
 });
 
 const realEstateSchema = baseSchema.extend({
-  type: z.literal('Недвижимость'),
+  type: z.literal(CardTypes.REAL_ESTATE),
   propertyType: z.string().min(1, 'Тип недвижимости обязателен'),
   area: z.number().min(1, 'Площадь обязательна'),
   rooms: z.number().min(1, 'Количество комнат обязательно'),
@@ -17,7 +18,7 @@ const realEstateSchema = baseSchema.extend({
 });
 
 const autoSchema = baseSchema.extend({
-  type: z.literal('Авто'),
+  type: z.literal(CardTypes.AUTO),
   brand: z.string().min(1, 'Марка обязательна'),
   model: z.string().min(1, 'Модель обязательна'),
   year: z.number().min(1900, 'Год выпуска обязателен'),
@@ -25,17 +26,31 @@ const autoSchema = baseSchema.extend({
 });
 
 const serviceSchema = baseSchema.extend({
-  type: z.literal('Услуги'),
+  type: z.literal(CardTypes.SERVICES),
   serviceType: z.string().min(1, 'Тип услуги обязателен'),
   experience: z.number().min(0, 'Опыт работы обязателен'),
   cost: z.number().min(1, 'Стоимость обязательна'),
   schedule: z.string().optional(),
 });
 
-export const cardSchema = z.discriminatedUnion('type', [
+export const cardSchemaFirst = baseSchema.extend({
+  type: z.union([
+    z.literal(CardTypes.REAL_ESTATE),
+    z.literal(CardTypes.AUTO),
+    z.literal(CardTypes.SERVICES),
+  ]),
+});
+
+export const cardSchemaSecond = z.discriminatedUnion('type', [
   realEstateSchema,
   autoSchema,
   serviceSchema,
 ]);
 
-export type CardUpdate = z.infer<typeof cardSchema>;
+export type CardUpdateFirst = z.infer<typeof cardSchemaFirst>;
+
+export type CardUpdateSecond = z.infer<typeof cardSchemaSecond>;
+
+export type ServiceSchema = z.infer<typeof serviceSchema>;
+export type AutoSchema = z.infer<typeof autoSchema>;
+export type RealEstateSchema = z.infer<typeof realEstateSchema>;

@@ -1,8 +1,9 @@
 import { useFormContext } from 'react-hook-form';
 import { TextField, MenuItem, Box } from '@mui/material';
+import { CardUpdateFirst } from '../../@types/cardSchema';
 
 export const BaseStep = () => {
-  const { register, formState } = useFormContext();
+  const { register, formState } = useFormContext<CardUpdateFirst>();
   const { errors } = formState;
 
   return (
@@ -11,32 +12,33 @@ export const BaseStep = () => {
         label='Название'
         {...register('name')}
         error={!!errors.name}
-        // helperText={errors.name?.message}
+        helperText={errors.description?.message?.toString()}
       />
+
       <TextField
         label='Описание'
         {...register('description')}
         error={!!errors.description}
-        // helperText={errors.description?.message}
+        helperText={errors.description?.message?.toString()}
       />
       <TextField
         label='Локация'
         {...register('location')}
         error={!!errors.location}
-        // helperText={errors.location?.message}
+        helperText={errors.location?.message?.toString()}
       />
       <TextField
-        label='Фото (URL)'
+        label='Фото (URL) необязательное поле'
         {...register('photo')}
         error={!!errors.photo}
-        // helperText={errors.photo?.message}
+        helperText={errors.photo?.message?.toString()}
       />
       <TextField
         select
         label='Категория'
-        {...register('category')}
-        error={!!errors.category}
-        // helperText={errors.category?.message}
+        {...register('type')}
+        error={!!errors.type}
+        helperText={errors.type?.message?.toString()}
       >
         <MenuItem value='Недвижимость'>Недвижимость</MenuItem>
         <MenuItem value='Авто'>Авто</MenuItem>
