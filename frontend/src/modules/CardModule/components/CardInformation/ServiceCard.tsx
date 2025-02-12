@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from '@mui/material';
-import { IAuto } from '../@types/CardDto';
+import { IService } from '../../@types/cardDto';
 import { FormattedNumber } from '@/ui';
 
 const StyledCard = styled(Box)(({ theme }) => ({
@@ -11,17 +11,17 @@ const StyledCard = styled(Box)(({ theme }) => ({
   margin: '0 auto',
 }));
 
-export const AutoCard = ({ card }: { card: IAuto }) => {
+export const ServiceCard = ({ card }: { card: IService }) => {
   return (
     <StyledCard>
       <Box mt={2}>
         <Typography variant='h6'>Детали:</Typography>
-        <Typography>Марка: {card.brand}</Typography>
-        <Typography>Модель: {card.model}</Typography>
-        <Typography>Год выпуска: {card.year}</Typography>
+        <Typography>Тип услуги: {card.serviceType}</Typography>
+        <Typography>Опыт работы: {card.experience} лет</Typography>
         <Typography>
-          Пробег: <FormattedNumber value={card.mileage} /> км
+          Стоимость: <FormattedNumber value={card.cost} /> ₽
         </Typography>
+        {card.schedule && <Typography>График: {card.schedule}</Typography>}
       </Box>
     </StyledCard>
   );

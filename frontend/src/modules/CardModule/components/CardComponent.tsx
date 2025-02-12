@@ -3,7 +3,7 @@ import { Box, styled } from '@mui/system';
 import { CustomImage, CustomTextEllipsis } from '@/ui';
 import { Link } from 'react-router';
 import { PATHS } from '@/assets';
-import { CardDto } from '../@types/CardDto';
+import { CardDto } from '../@types/cardDto';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: '0 10px',

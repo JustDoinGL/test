@@ -1,4 +1,5 @@
-export { AutoCard } from './AutoCard';
+export { AutoCard } from './CardInformation/AutoCard';
+export { RealEstateCard } from './CardInformation/RealEstateCard';
+export { ServiceCard } from './CardInformation/ServiceCard';
+
 export { CardComponent } from './CardComponent';
-export { RealEstateCard } from './RealEstateCard';
-export { ServiceCard } from './ServiceCard';

@@ -1,10 +1,10 @@
+import { useInterSection } from '@/shared';
 import { CardComponent } from './components/CardComponent';
 import { useCardList } from './hooks/useCardList';
-import { useInterSection } from './hooks/useInterSection';
 import { CustomError, CustomSpinner } from '@/ui';
 import { Box } from '@mui/material';
 
-const CardModule = () => {
+export const CardsInfinityScroll = () => {
   const { error, isLoading, cardItems, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useCardList();
   const cursorRef = useInterSection(() => fetchNextPage());
@@ -34,5 +34,3 @@ const CardModule = () => {
     </Box>
   );
 };
-
-export default CardModule;

@@ -1,6 +1,6 @@
 import { jsonApiInstance } from '@/shared';
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
-import { CardDto } from '../@types/CardDto';
+import { CardDto } from '../@types/cardDto';
 
 export type PaginatedResult<T> = {
   items: T[];
