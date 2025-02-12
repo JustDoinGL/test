@@ -29,11 +29,11 @@ export const NotFoundPage = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMessage('Перенаправляем вас...');
-    }, 3000);
+    }, 7000);
 
     const redirectTimer = setTimeout(() => {
       handleNavigation();
-    }, 5000);
+    }, 10000);
 
     return () => {
       clearTimeout(timer);
@@ -54,7 +54,15 @@ export const NotFoundPage = () => {
       }}
     >
       <Box>
-        <AnimatedText variant='h3' gutterBottom>
+        <AnimatedText
+          variant='h3'
+          gutterBottom
+          sx={{
+            '@media (max-width: 600px)': {
+              fontSize: '20px',
+            },
+          }}
+        >
           {message}
         </AnimatedText>
         <Button variant='contained' color='primary' onClick={handleNavigation} sx={{ mt: 3 }}>

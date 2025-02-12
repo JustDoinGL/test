@@ -1,5 +1,5 @@
 import { AppBar, Toolbar, Container } from '@mui/material';
-import { NavLink, Outlet } from 'react-router';
+import { NavLink, Outlet, useSearchParams } from 'react-router';
 import styled from '@emotion/styled';
 import { PATHS } from '@/assets';
 
@@ -19,13 +19,21 @@ const SCNavLink = styled(NavLink)`
 `;
 
 export const MainLayout = () => {
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('id');
+
   return (
     <>
       <AppBar component='header' position='sticky'>
         <Toolbar sx={{ margin: '0 auto' }}>
           <nav>
             <SCNavLink to={PATHS.mainPage}>Главная</SCNavLink>
-            <SCNavLink to={PATHS.formPage}>Создать объявление</SCNavLink>
+            <SCNavLink
+              to={PATHS.formPage}
+              style={({ isActive }) => (isActive && id ? { backgroundColor: 'transparent' } : {})}
+            >
+              Создать объявление
+            </SCNavLink>
           </nav>
         </Toolbar>
       </AppBar>
