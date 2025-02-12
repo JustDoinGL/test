@@ -1,5 +1,5 @@
 import { jsonApiInstance } from '@/shared';
-import { infiniteQueryOptions } from '@tanstack/react-query';
+import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { CardDto } from '../@types/CardDto';
 
 export type PaginatedResult<T> = {
@@ -11,6 +11,16 @@ export type PaginatedResult<T> = {
 
 export const cardListApi = {
   baseKey: 'list',
+
+  getCard: (id: string) => {
+    return queryOptions({
+      queryKey: [cardListApi.baseKey, 'list', id],
+      queryFn: (meta) =>
+        jsonApiInstance<CardDto>(`/items/${id}`, {
+          signal: meta.signal,
+        }),
+    });
+  },
 
   getCardListInfinityQueryOptions: () => {
     return infiniteQueryOptions({

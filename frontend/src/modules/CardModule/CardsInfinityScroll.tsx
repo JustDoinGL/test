@@ -1,4 +1,4 @@
-import { CardComponent } from './components/CardComponent/CardComponent';
+import { CardComponent } from './components/CardComponent';
 import { useCardList } from './hooks/useCardList';
 import { useInterSection } from './hooks/useInterSection';
 import { CustomError, CustomSpinner } from '@/ui';

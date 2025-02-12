@@ -1,9 +1,9 @@
 import { Button, Card, CardContent, Typography } from '@mui/material';
 import { Box, styled } from '@mui/system';
-import { CardDto } from '../../@types/CardDto';
 import { CustomImage, CustomTextEllipsis } from '@/ui';
 import { Link } from 'react-router';
 import { PATHS } from '@/assets';
+import { CardDto } from '../@types/CardDto';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   margin: '0 10px',
