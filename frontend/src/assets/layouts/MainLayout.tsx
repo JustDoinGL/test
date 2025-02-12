@@ -21,7 +21,7 @@ const SCNavLink = styled(NavLink)`
 export const MainLayout = () => {
   return (
     <>
-      <AppBar position='sticky'>
+      <AppBar component='header' position='sticky'>
         <Toolbar sx={{ margin: '0 auto' }}>
           <nav>
             <SCNavLink to={PATHS.mainPage}>Главная</SCNavLink>

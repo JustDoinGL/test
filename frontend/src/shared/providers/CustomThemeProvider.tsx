@@ -14,12 +14,8 @@ const globalStyles = {
     boxSizing: 'inherit',
   },
   'h1, h2, h3, h4, h5, h6, p, span': {
-    textTransform: 'lowercase',
     fontSize: 'clamp(1rem, 2vw, 0.5rem)',
     margin: 0,
-    '::first-letter': {
-      textTransform: 'uppercase',
-    },
   },
   h1: {
     fontSize: 'clamp(2rem, 5vw, 3rem)',
@@ -39,6 +35,13 @@ const globalStyles = {
   },
   button: {
     textTransform: 'capitalize',
+  },
+  a: {
+    textDecoration: 'none',
+    color: 'inherit',
+    '&:hover': {
+      textDecoration: 'none',
+    },
   },
 };
 
