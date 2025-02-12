@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
 import { useStep } from './hooks/useStep';
 import { BaseStep, CategoryStep, StepNavigation } from './components';
-import { cardSchemaFirst, cardSchemaSecond, CardUpdateSecond } from './@types/cardSchema';
+import { cardSchemaFirst, cardSchemaSecond, CardUpdateSecond } from './types/cardSchema';
 import { useSearchParams } from 'react-router';
 
 const steps = ['Основной шаг', 'Дополнительный шаг'];

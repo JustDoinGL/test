@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { RealEstateSchema } from '../../../@types/cardSchema';
+import { RealEstateSchema } from '../../../types/cardSchema';
 import { TextField, MenuItem } from '@mui/material';
 
 export const RealEstateForm = () => {

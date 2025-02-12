@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { AutoForm, RealEstateForm, ServiceForm } from './CategoryStepHelper';
-import { CardUpdateFirst } from '../../@types/cardSchema';
+import { CardUpdateFirst } from '../../types/cardSchema';
 
 export const CategoryStep = () => {
   const { control } = useFormContext<CardUpdateFirst>();

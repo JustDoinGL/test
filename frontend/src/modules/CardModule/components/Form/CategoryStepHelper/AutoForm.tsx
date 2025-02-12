@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { AutoSchema } from '../../../@types/cardSchema';
+import { AutoSchema } from '../../../types/cardSchema';
 import { TextField, MenuItem } from '@mui/material';
 
 export const AutoForm = () => {

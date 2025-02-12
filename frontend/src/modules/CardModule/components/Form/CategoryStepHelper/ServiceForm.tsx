@@ -1,5 +1,5 @@
 import { useFormContext } from 'react-hook-form';
-import { ServiceSchema } from '../../../@types/cardSchema';
+import { ServiceSchema } from '../../../types/cardSchema';
 import { TextField, MenuItem } from '@mui/material';
 
 export const ServiceForm = () => {

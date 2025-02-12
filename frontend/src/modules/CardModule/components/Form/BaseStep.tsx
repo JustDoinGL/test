@@ -1,6 +1,6 @@
 import { useFormContext } from 'react-hook-form';
 import { TextField, MenuItem, Box } from '@mui/material';
-import { CardUpdateFirst } from '../../@types/cardSchema';
+import { CardUpdateFirst } from '../../types/cardSchema';
 
 export const BaseStep = () => {
   const { register, formState } = useFormContext<CardUpdateFirst>();

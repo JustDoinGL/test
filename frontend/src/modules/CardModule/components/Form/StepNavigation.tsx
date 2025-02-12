@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
-import { CardUpdateFirst, CardUpdateSecond } from '../../@types/cardSchema';
+import { CardUpdateFirst, CardUpdateSecond } from '../../types/cardSchema';
 
 type TStepNavigation = {
   activeStep: number;

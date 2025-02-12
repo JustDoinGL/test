@@ -1,5 +1,5 @@
 import { Box, Typography, styled } from '@mui/material';
-import { IAuto } from '../../@types/cardDto';
+import { IAuto } from '../../types/cardDto';
 import { FormattedNumber } from '@/ui';
 
 const StyledCard = styled(Box)(({ theme }) => ({
