@@ -34,7 +34,7 @@ export const AutoForm = () => {
       />
 
       <TextField
-        label='Пробег (км)'
+        label='Пробег (км) не обязательное поле'
         type='number'
         {...register('mileage', { valueAsNumber: true })}
         error={!!errors.mileage}

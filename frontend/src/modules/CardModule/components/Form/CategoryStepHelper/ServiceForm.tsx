@@ -35,7 +35,7 @@ export const ServiceForm = () => {
       />
 
       <TextField
-        label='График работы'
+        label='График работы не обязательное поле'
         {...register('schedule')}
         error={!!errors.schedule}
         helperText={errors.schedule?.message?.toString()}

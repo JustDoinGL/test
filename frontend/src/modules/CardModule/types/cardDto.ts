@@ -1,4 +1,4 @@
-import { CardTypes } from '@/assets';
+import { CardTypes, PROPERTY_VALUES, CAR_VALUES, SERVICE_VALUES } from '@/assets';
 
 export interface BaseAd {
   id: number;
@@ -10,7 +10,7 @@ export interface BaseAd {
 
 export interface IRealEstate extends BaseAd {
   type: typeof CardTypes.REAL_ESTATE;
-  propertyType: string;
+  propertyType: (typeof PROPERTY_VALUES)[number];
   area: number;
   rooms: number;
   price: number;
@@ -18,7 +18,7 @@ export interface IRealEstate extends BaseAd {
 
 export interface IAuto extends BaseAd {
   type: typeof CardTypes.AUTO;
-  brand: string;
+  brand: (typeof CAR_VALUES)[number];
   model: string;
   year: number;
   mileage: number;
@@ -26,7 +26,7 @@ export interface IAuto extends BaseAd {
 
 export interface IService extends BaseAd {
   type: typeof CardTypes.SERVICES;
-  serviceType: string;
+  serviceType: (typeof SERVICE_VALUES)[number];
   experience: number;
   cost: number;
   schedule?: string;

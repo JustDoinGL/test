@@ -1,7 +1,7 @@
 import { CardTypes, PATHS } from '@/assets';
 import { CustomError, CustomImage, CustomNotFound } from '@/ui';
 import { Box, Button, styled, Typography } from '@mui/material';
-import { useGetList } from './hooks/useCard';
+import { useGetCard } from './hooks/useCard';
 import { AutoCard, RealEstateCard, ServiceCard } from './components';
 import { Link } from 'react-router';
 
@@ -16,7 +16,7 @@ const Container = styled(Box)(({ theme }) => ({
 }));
 
 export const CardInformation = ({ id }: { id: string }) => {
-  const { error, isLoading, card } = useGetList(id);
+  const { error, isLoading, card } = useGetCard(id);
 
   if (error) return <CustomNotFound />;
 

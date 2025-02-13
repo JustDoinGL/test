@@ -1,5 +1,5 @@
 import { PATHS } from '@/assets';
-import { MultiStepForm } from '@/modules';
+import { CardForm } from '@/modules';
 import { CustomBackButton } from '@/ui';
 import { Box } from '@mui/material';
 
@@ -10,7 +10,7 @@ export const FormPage = () => {
         <CustomBackButton />
       </Box>
 
-      <MultiStepForm />
+      <CardForm />
     </Box>
   );
 };

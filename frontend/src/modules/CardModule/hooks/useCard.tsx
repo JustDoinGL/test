@@ -1,7 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
+import { QueryObserverResult, RefetchOptions, useQuery } from '@tanstack/react-query';
+import { CardDto } from '../types/cardDto';
 import { cardListApi } from '../api/api';
 
-export function useGetList(id: string) {
+type TUseGetCard = (
+  id: string | null,
+  isValidId?: boolean | '' | null
+) => {
+  error: Error | null;
+  card: CardDto | undefined;
+  refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<CardDto, Error>>;
+  isLoading: boolean;
+};
+
+export const useGetCard: TUseGetCard = (id, isValidId = true) => {
   const {
     data: card,
     error,
@@ -9,7 +20,8 @@ export function useGetList(id: string) {
     refetch,
   } = useQuery({
     ...cardListApi.getCard(id),
+    enabled: !!isValidId && !!id,
   });
 
   return { error, card, isLoading, refetch };
-}
+};

@@ -1,79 +1,39 @@
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
-import { useStep } from './hooks/useStep';
-import { BaseStep, CategoryStep, StepNavigation } from './components';
-import { cardSchemaFirst, cardSchemaSecond, CardUpdateSecond } from './types/cardSchema';
-import { useSearchParams } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
+import { MultiStepForm } from './components/MultiStepForm';
+import { useGetCard } from './hooks/useCard';
+import { CustomError, CustomSpinner } from '@/ui';
+import { Box, Button } from '@mui/material';
+import { PATHS } from '@/assets';
 
-const steps = ['Основной шаг', 'Дополнительный шаг'];
-
-export const MultiStepForm = () => {
-  const { activeStep, handleNext, handleBack } = useStep();
+export const CardForm = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
 
-  const methods = useForm<CardUpdateSecond>({
-    resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
-    defaultValues: {},
-    mode: 'onTouched',
-  });
+  const isValidId = id && !isNaN(Number(id));
 
-  const { handleSubmit } = methods;
+  const { error, isLoading, card } = useGetCard(id, isValidId);
 
-  const onSubmit: SubmitHandler<CardUpdateSecond> = (data) => {
-    if (activeStep === 1) {
-      console.log('Форма отправлена:', data);
-    }
-  };
-
-  return (
-    <FormProvider {...methods}>
-      <Box
-        sx={{
-          maxWidth: '600px',
-          margin: '0 auto',
-          padding: '20px',
-          border: '5px solid white',
-          borderRadius: '15px',
-          background: 'rgb(11, 20, 31)',
-        }}
-      >
-        <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
-          {id ? 'Редактирование услуги' : 'Создание услуги'}
-        </Typography>
-
-        <Stepper
-          activeStep={activeStep}
-          sx={{
-            mb: '15px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px',
-            '@media (max-width: 440px)': {
-              display: 'none',
-            },
-          }}
-        >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-
-        <Box component='form' onSubmit={handleSubmit(onSubmit)}>
-          {activeStep === 0 && <BaseStep />}
-          {activeStep === 1 && <CategoryStep />}
-
-          <StepNavigation
-            activeStep={activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            stepsLength={steps.length}
-          />
-        </Box>
+  if (isLoading) {
+    return (
+      <Box sx={{ minHeight: '100%' }}>
+        <CustomSpinner size={100} />
       </Box>
-    </FormProvider>
-  );
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <CustomError
+          errorType='info'
+          errorText='Такое объявление не найдено, Вы можете создать объявление'
+        />
+        <Button component={Link} to={PATHS.formPage} variant='contained'>
+          Создайте объявление
+        </Button>
+      </Box>
+    );
+  }
+
+  return <MultiStepForm defaultValues={card} isEditing={!!isValidId} />;
 };

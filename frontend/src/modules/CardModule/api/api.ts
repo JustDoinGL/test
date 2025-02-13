@@ -12,7 +12,7 @@ export type PaginatedResult<T> = {
 export const cardListApi = {
   baseKey: 'list',
 
-  getCard: (id: string) => {
+  getCard: (id: string | null) => {
     return queryOptions({
       queryKey: [cardListApi.baseKey, 'list', id],
       queryFn: (meta) =>

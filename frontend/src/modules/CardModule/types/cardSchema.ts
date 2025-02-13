@@ -74,6 +74,7 @@ const autoSchema = baseSchema.extend({
       .number()
       .min(100, 'Пробег обязателен')
       .max(999_999_999_999, 'Пробег не может быть больше 999 999 999 999')
+      .optional()
   ),
 });
 
