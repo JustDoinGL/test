@@ -1,6 +1,6 @@
 import { Box, SxProps, Theme } from '@mui/material';
 import styled from '@emotion/styled';
-import NoPhoto from '@/../public/NoPhoto.png';
+import NoPhoto from '/NoPhoto.png';
 
 interface CustomImageProps {
   src?: string | undefined;
