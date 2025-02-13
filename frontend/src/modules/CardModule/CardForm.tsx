@@ -16,7 +16,7 @@ export const MultiStepForm = () => {
   const methods = useForm<CardUpdateSecond>({
     resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
     defaultValues: {},
-    mode: 'onChange',
+    mode: 'onTouched',
   });
 
   const { handleSubmit } = methods;

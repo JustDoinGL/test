@@ -30,8 +30,10 @@ export const CustomSelect = <T extends FieldValues>({
       control={control}
       render={({ field }) => (
         <FormControl fullWidth error={!!errors[name]} sx={{ minWidth: 120 }}>
-          <InputLabel shrink>{label}</InputLabel>
-          <Select {...field} label={label} {...rest} defaultValue={options[0].value}>
+          <InputLabel id='demo-controlled-open-select-label'>
+            {label} {field.value ? '' : 'не выбраны'}
+          </InputLabel>
+          <Select {...field} label={label} {...rest}>
             {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}

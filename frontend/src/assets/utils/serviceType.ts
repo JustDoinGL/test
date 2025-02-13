@@ -9,3 +9,15 @@ export const SERVICE_TYPES = [
   { value: 'it', label: 'IT-услуги' },
   { value: 'design', label: 'Дизайн' },
 ];
+
+export const SERVICE_VALUES = [
+  'repair',
+  'cleaning',
+  'delivery',
+  'tutoring',
+  'babysitting',
+  'consulting ',
+  'event',
+  'it',
+  'design',
+] as const;

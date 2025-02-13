@@ -10,3 +10,16 @@ export const CAR_BRANDS = [
   { value: 'kia', label: 'Kia' },
   { value: 'hyundai', label: 'Hyundai' },
 ];
+
+export const CAR_VALUES = [
+  'toyota',
+  'bmw',
+  'mercedes',
+  'audi',
+  'honda',
+  'ford',
+  'chevrolet',
+  'nissan',
+  'kia',
+  'hyundai',
+] as const;

@@ -1,4 +1,10 @@
-import { CardTypes } from '@/assets';
+import {
+  CAR_VALUES,
+  CardTypes,
+  PROPERTY_VALUES,
+  SERVICE_VALUES,
+  toNumberZodHelper,
+} from '@/assets';
 import { z } from 'zod';
 
 const baseSchema = z.object({
@@ -9,45 +15,82 @@ const baseSchema = z.object({
     .min(10, 'Описание не может быть короче 10 символов')
     .max(9_999_999, 'Слишком длинное описание'),
   location: z.string().min(1, 'Локация обязательна').max(99, 'Слишком длинное название локации'),
-  photo: z.string().max(99, 'Слишком длинная сылка').optional(),
+  photo: z
+    .string()
+    .max(99, 'Слишком длинная сылка')
+    .refine(
+      (value: string) => {
+        const words = value.trim().split(/\s+/); // Разбиваем текст по пробелам
+        if (words.length === 1) return true; // Одно слово — валидно
+        try {
+          new URL(value); // Проверяем, является ли текст валидным URL
+          return true;
+        } catch {
+          return false;
+        }
+      },
+      { message: 'Если больше одного слова, то должен быть валидный URL' }
+    )
+    .optional(),
 });
 
 const realEstateSchema = baseSchema.extend({
   type: z.literal(CardTypes.REAL_ESTATE),
-  propertyType: z.string().min(1, 'Тип недвижимости обязателен'),
-  area: z.number().min(1, 'Площадь обязательна').min(10_000, 'Максимальная площадь - 10 000'),
-  rooms: z
-    .number()
-    .min(1, 'Количество комнат обязательно')
-    .max(100, 'Максимальное количество комнат 100'),
-  price: z
-    .number()
-    .min(1, 'Цена обязательна')
-    .max(999_999_999_999, 'Максимальное количество комнат 999 999 999 999'),
+  propertyType: z.enum(PROPERTY_VALUES),
+  area: z.preprocess(
+    toNumberZodHelper,
+    z.number().min(1, 'Площадь обязательна').max(10_000, 'Максимальная площадь - 10 000')
+  ),
+  rooms: z.preprocess(
+    toNumberZodHelper,
+    z
+      .number()
+      .min(1, 'Количество комнат обязательно')
+      .max(100, 'Максимальное количество комнат 100')
+  ),
+  price: z.preprocess(
+    toNumberZodHelper,
+    z
+      .number()
+      .min(1, 'Цена обязательна')
+      .max(999_999_999_999, 'Максимальное количество комнат 999 999 999 999')
+  ),
 });
 
 const autoSchema = baseSchema.extend({
   type: z.literal(CardTypes.AUTO),
-  brand: z.string().min(1, 'Марка обязательна'),
+  brand: z.enum(CAR_VALUES),
   model: z.string().min(1, 'Модель обязательна'),
-  year: z
-    .number()
-    .min(1900, 'Год выпуска обязателен')
-    .max(Number(new Date().getFullYear), 'Этот год еще не наступил'),
-  mileage: z
-    .number()
-    .min(100, 'Пробег обязателен')
-    .max(999_999_999_999, 'Пробег не может быть больше 999 999 999 999'),
+  year: z.preprocess(
+    toNumberZodHelper,
+    z
+      .number()
+      .min(1900, 'Год выпуска обязателен')
+      .max(Number(new Date().getFullYear()), 'Этот год еще не наступил')
+  ),
+  mileage: z.preprocess(
+    toNumberZodHelper,
+    z
+      .number()
+      .min(100, 'Пробег обязателен')
+      .max(999_999_999_999, 'Пробег не может быть больше 999 999 999 999')
+  ),
 });
 
 const serviceSchema = baseSchema.extend({
   type: z.literal(CardTypes.SERVICES),
-  serviceType: z.string().min(1, 'Тип услуги обязателен'),
-  experience: z.number().min(0, 'Опыт работы обязателен').max(100, 'Слишком большой опыт работы'),
-  cost: z
-    .number()
-    .min(1, 'Стоимость обязательна')
-    .max(999_999_999_999_999, 'Максимальная стоимость 999 999 999 999 999'),
+  serviceType: z.enum(SERVICE_VALUES),
+  experience: z.preprocess(
+    toNumberZodHelper,
+    z.number().min(0, 'Опыт работы обязателен').max(100, 'Слишком большой опыт работы')
+  ),
+  cost: z.preprocess(
+    toNumberZodHelper,
+    z
+      .number()
+      .min(1, 'Стоимость обязательна')
+      .max(999_999_999_999_999, 'Максимальная стоимость 999 999 999 999 999')
+  ),
   schedule: z.string().optional(),
 });
 

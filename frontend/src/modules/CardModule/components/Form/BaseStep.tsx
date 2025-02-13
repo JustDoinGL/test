@@ -15,12 +15,13 @@ export const BaseStep = () => {
         label='Название'
         {...register('name')}
         error={!!errors.name}
-        helperText={errors.description?.message?.toString()}
+        helperText={errors.name?.message?.toString()}
       />
 
       <TextField
         multiline
         label='Описание'
+        minRows={3}
         {...register('description')}
         error={!!errors.description}
         helperText={errors.description?.message?.toString()}
