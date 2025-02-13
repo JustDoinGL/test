@@ -5,3 +5,4 @@ export { CustomTextEllipsis } from './CustomTextEllipsis/CustomTextEllipsis';
 export { CustomNotFound } from './CustomNotFound/CustomNotFound';
 export { FormattedNumber } from './FormattedNumber/FormattedNumber';
 export { CustomBackButton } from './CustomBackButton/CustomBackButton';
+export { CustomSelect } from './CustomSelect/CustomSelect';

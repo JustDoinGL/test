@@ -1,30 +1,30 @@
 import { useFormContext } from 'react-hook-form';
 import { AutoSchema } from '../../../types/cardSchema';
-import { TextField, MenuItem } from '@mui/material';
+import { TextField } from '@mui/material';
+import { CustomSelect } from '@/ui';
+import { CAR_BRANDS } from '@/assets';
 
 export const AutoForm = () => {
-  const { register, formState } = useFormContext<AutoSchema>();
+  const { register, formState, control } = useFormContext<AutoSchema>();
   const { errors } = formState;
 
   return (
     <>
-      <TextField
-        select
+      <CustomSelect
+        control={control}
+        errors={errors}
         label='Марка'
-        {...register('brand')}
-        error={!!errors.brand}
-        helperText={errors.brand?.message?.toString()}
-      >
-        <MenuItem value='Toyota'>Toyota</MenuItem>
-        <MenuItem value='BMW'>BMW</MenuItem>
-        <MenuItem value='Audi'>Audi</MenuItem>
-      </TextField>
+        name='brand'
+        options={CAR_BRANDS}
+      />
+
       <TextField
         label='Модель'
         {...register('model')}
         error={!!errors.model}
         helperText={errors.model?.message?.toString()}
       />
+
       <TextField
         label='Год выпуска'
         type='number'
@@ -32,6 +32,7 @@ export const AutoForm = () => {
         error={!!errors.year}
         helperText={errors.year?.message?.toString()}
       />
+
       <TextField
         label='Пробег (км)'
         type='number'

@@ -9,7 +9,7 @@ const baseSchema = z.object({
     .min(10, 'Описание не может быть короче 10 символов')
     .max(9_999_999, 'Слишком длинное описание'),
   location: z.string().min(1, 'Локация обязательна').max(99, 'Слишком длинное название локации'),
-  photo: z.string().min(99, 'Слишком длинная сылка').optional(),
+  photo: z.string().max(99, 'Слишком длинная сылка').optional(),
 });
 
 const realEstateSchema = baseSchema.extend({

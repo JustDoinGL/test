@@ -1,24 +1,23 @@
 import { useFormContext } from 'react-hook-form';
 import { ServiceSchema } from '../../../types/cardSchema';
-import { TextField, MenuItem } from '@mui/material';
+import { TextField } from '@mui/material';
+import { SERVICE_TYPES } from '@/assets';
+import { CustomSelect } from '@/ui';
 
 export const ServiceForm = () => {
-  const { register, formState } = useFormContext<ServiceSchema>();
+  const { register, formState, control } = useFormContext<ServiceSchema>();
   const { errors } = formState;
 
   return (
     <>
-      <TextField
-        select
-        label='Тип услуги'
-        {...register('serviceType')}
-        error={!!errors.serviceType}
-        helperText={errors.serviceType?.message?.toString()}
-      >
-        <MenuItem value='Ремонт'>Ремонт</MenuItem>
-        <MenuItem value='Уборка'>Уборка</MenuItem>
-        <MenuItem value='Доставка'>Доставка</MenuItem>
-      </TextField>
+      <CustomSelect
+        control={control}
+        errors={errors}
+        label='Тип недвижимости'
+        name='serviceType'
+        options={SERVICE_TYPES}
+      />
+
       <TextField
         label='Опыт работы (лет)'
         type='number'
@@ -26,6 +25,7 @@ export const ServiceForm = () => {
         error={!!errors.experience}
         helperText={errors.experience?.message?.toString()}
       />
+
       <TextField
         label='Стоимость'
         type='number'
@@ -33,6 +33,7 @@ export const ServiceForm = () => {
         error={!!errors.cost}
         helperText={errors.cost?.message?.toString()}
       />
+
       <TextField
         label='График работы'
         {...register('schedule')}

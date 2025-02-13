@@ -1,24 +1,23 @@
 import { useFormContext } from 'react-hook-form';
 import { RealEstateSchema } from '../../../types/cardSchema';
-import { TextField, MenuItem } from '@mui/material';
+import { TextField } from '@mui/material';
+import { CustomSelect } from '@/ui';
+import { PROPERTY_TYPES } from '@/assets';
 
 export const RealEstateForm = () => {
-  const { register, formState } = useFormContext<RealEstateSchema>();
+  const { register, formState, control } = useFormContext<RealEstateSchema>();
   const { errors } = formState;
 
   return (
     <>
-      <TextField
-        select
+      <CustomSelect
+        control={control}
+        errors={errors}
         label='Тип недвижимости'
-        {...register('propertyType')}
-        error={!!errors.propertyType}
-        helperText={errors.propertyType?.message?.toString()}
-      >
-        <MenuItem value='Квартира'>Квартира</MenuItem>
-        <MenuItem value='Дом'>Дом</MenuItem>
-        <MenuItem value='Коттедж'>Коттедж</MenuItem>
-      </TextField>
+        name='propertyType'
+        options={PROPERTY_TYPES}
+      />
+
       <TextField
         label='Площадь (кв. м)'
         type='number'
@@ -26,6 +25,7 @@ export const RealEstateForm = () => {
         error={!!errors.area}
         helperText={errors.area?.message?.toString()}
       />
+
       <TextField
         label='Количество комнат'
         type='number'
@@ -33,6 +33,7 @@ export const RealEstateForm = () => {
         error={!!errors.rooms}
         helperText={errors.rooms?.message?.toString()}
       />
+
       <TextField
         label='Цена'
         type='number'
