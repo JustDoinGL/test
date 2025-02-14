@@ -4,6 +4,7 @@ import {
   PROPERTY_VALUES,
   SERVICE_VALUES,
   toNumberZodHelper,
+  toOptionalNumberZodHelper,
 } from '@/assets';
 import { z } from 'zod';
 
@@ -68,12 +69,14 @@ const autoSchema = baseSchema.extend({
       .min(1900, 'Год выпуска обязателен')
       .max(Number(new Date().getFullYear()), 'Этот год еще не наступил')
   ),
+
   mileage: z.preprocess(
-    toNumberZodHelper,
+    toOptionalNumberZodHelper,
     z
       .number()
-      .min(100, 'Пробег обязателен')
+      .min(100, 'Пробег не может быть таким маленьким')
       .max(999_999_999_999, 'Пробег не может быть больше 999 999 999 999')
+      .nullable()
       .optional()
   ),
 });

@@ -13,7 +13,7 @@ export const ServiceForm = () => {
       <CustomSelect
         control={control}
         errors={errors}
-        label='Тип недвижимости'
+        label='Тип услуги'
         name='serviceType'
         options={SERVICE_TYPES}
       />

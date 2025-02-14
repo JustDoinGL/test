@@ -9,4 +9,4 @@ export { CardTypes, typesArr } from './utils/cardType';
 export { PROPERTY_TYPES, PROPERTY_VALUES } from './utils/propertyType';
 export { SERVICE_TYPES, SERVICE_VALUES } from './utils/serviceType';
 
-export { toNumberZodHelper } from './helpers/ZodToNumber';
+export { toNumberZodHelper, toOptionalNumberZodHelper } from './helpers/ZodToNumber';

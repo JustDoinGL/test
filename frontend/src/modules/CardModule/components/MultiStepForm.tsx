@@ -18,8 +18,8 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
 
   const methods = useForm<CardUpdateSecond>({
     resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
-    defaultValues: defaultValues ? defaultValues : {},
-    // values: defaultValues ? defaultValues : {},
+    defaultValues: defaultValues,
+    values: defaultValues,
     mode: 'onTouched',
   });
 
