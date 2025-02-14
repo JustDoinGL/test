@@ -1,7 +1,7 @@
 import { useInterSection } from '@/shared';
 import { CardComponent } from './components/BaseCard';
 import { CustomError, CustomSpinner } from '@/ui';
-import { Box } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import { useCardList } from './hooks';
 
 export const CardsInfinityScroll = () => {
@@ -11,10 +11,14 @@ export const CardsInfinityScroll = () => {
 
   if (error) return <CustomError errorText={String(error)} />;
 
-  if (isLoading) return <Box>error</Box>;
+  if (isLoading) {
+    return Array.from({ length: 5 }, (_, index) => (
+      <Skeleton key={index} variant='rounded' width={400} height={400} sx={{ mb: '20px' }} />
+    ));
+  }
 
   return (
-    <Box sx={{ margin: '0 auto' }}>
+    <Box sx={{ margin: '10px auto' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', mb: '20px' }}>
         {cardItems?.map((card) => <CardComponent card={card} key={card.id} />)}
       </Box>

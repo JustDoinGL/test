@@ -25,16 +25,14 @@ export const MainLayout = () => {
   return (
     <>
       <AppBar component='header' position='sticky'>
-        <Toolbar sx={{ margin: '0 auto' }}>
-          <nav>
-            <SCNavLink to={PATHS.mainPage}>Главная</SCNavLink>
-            <SCNavLink
-              to={PATHS.formPage}
-              style={({ isActive }) => (isActive && id ? { display: 'none' } : {})}
-            >
-              Разместить объявление
-            </SCNavLink>
-          </nav>
+        <Toolbar sx={{ margin: '0 auto', p: 0 }} component='nav'>
+          <SCNavLink to={PATHS.mainPage}>Главная</SCNavLink>
+          <SCNavLink
+            to={PATHS.formPage}
+            style={({ isActive }) => (isActive && id ? { display: 'none' } : {})}
+          >
+            Разместить объявление
+          </SCNavLink>
         </Toolbar>
       </AppBar>
       <Container sx={{ marginTop: 4 }}>

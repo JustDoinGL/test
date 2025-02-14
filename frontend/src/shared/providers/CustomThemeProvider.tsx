@@ -9,6 +9,10 @@ const globalStyles = {
     boxSizing: 'border-box',
     fontFamily: 'Arial, sans-serif',
     textAlign: 'center',
+    minHeight: '100vh',
+  },
+  html: {
+    minHeight: '100vh',
   },
   '*, *::before, *::after': {
     boxSizing: 'inherit',

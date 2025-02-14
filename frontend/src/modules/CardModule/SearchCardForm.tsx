@@ -6,7 +6,7 @@ import { Box, Button } from '@mui/material';
 import { CustomSelect } from '@/ui';
 import { SearchFormValues, searchSchema } from './types/searchSchema';
 
-export const ZZZZZ = () => {
+export const SearchCardForm = () => {
   const { setSearchParams } = useCustomSearchParams();
 
   const methods = useForm<SearchFormValues>({

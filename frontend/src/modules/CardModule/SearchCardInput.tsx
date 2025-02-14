@@ -3,7 +3,7 @@ import { useDebounce } from '@/shared';
 import { Box, TextField } from '@mui/material';
 import { useCustomSearchParams } from './hooks';
 
-export const SearchCard = () => {
+export const SearchCardInput = () => {
   const { searchParams, setSearchParams } = useCustomSearchParams();
   const [searchTerm, setSearchTerm] = useState(searchParams.q || '');
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -22,7 +22,7 @@ export const SearchCard = () => {
         type='text'
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        label='Поиск карточки по названию'
+        label='Поиск карточки'
         sx={{ width: '100%' }}
         fullWidth
       />
