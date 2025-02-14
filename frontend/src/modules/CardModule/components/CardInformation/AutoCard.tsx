@@ -21,7 +21,7 @@ export const AutoCard = ({ card }: { card: IAuto }) => {
         <Typography>Модель: {model}</Typography>
         <Typography>Год выпуска: {year}</Typography>
         <Typography>
-          Пробег: {mileage ? `${(<FormattedNumber value={mileage} />)} км` : 'Не указак'}
+          Пробег: {mileage ? `${(<FormattedNumber value={mileage} />)} км` : 'Не указан'}
         </Typography>
       </Box>
     </StyledCard>

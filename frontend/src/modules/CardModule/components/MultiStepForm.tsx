@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
-import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
-import { useStep } from '../hooks/useStep';
+import { Box, Stepper, Step, StepLabel, Typography, Button, Container } from '@mui/material';
+import { FormProvider } from 'react-hook-form';
 import { BaseStep, CategoryStep, StepNavigation } from './Form';
-import { cardSchemaFirst, cardSchemaSecond, CardUpdateSecond } from '../types/cardSchema';
+import { useStep, useSaveLocalFormData } from '../hooks';
+import { CustomError, CustomSpinner } from '@/ui';
+import { useMultiStepForm } from '../hooks/useMultiStepForm';
 import { CardDto } from '../types/cardDto';
-import { useFormData } from '../hooks/useFormData';
+import { Link } from 'react-router';
+import { PATHS } from '@/assets';
 
 const steps = ['Основной шаг', 'Дополнительный шаг'];
 
@@ -16,16 +17,17 @@ type MultiStepFormProps = {
 };
 
 export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) => {
-  const { activeStep, handleNext, handleBack } = useStep();
-  const { formData, saveFormData, clearFormData } = useFormData(defaultValues);
-
-  const methods = useForm<CardUpdateSecond>({
-    resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
-    defaultValues: formData,
+  const { activeStep, handleNext, handleBack, resetStep } = useStep();
+  const { formData, saveFormData, clearFormData } = useSaveLocalFormData(defaultValues);
+  const { methods, onSubmit } = useMultiStepForm({
+    clearFormData,
+    activeStep,
     values: formData,
-    mode: 'onTouched',
+    resetStep,
   });
-  const { handleSubmit, watch } = methods;
+
+  const { watch, formState } = methods;
+  const { errors, isSubmitted, isSubmitting } = formState;
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -33,63 +35,69 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
     });
 
     return () => subscription.unsubscribe();
-  }, [watch, saveFormData]);
-
-  const onSubmit: SubmitHandler<CardUpdateSecond> = (data) => {
-    if (data.id) {
-      clearFormData(data.id);
-    } else {
-      clearFormData(-1);
-    }
-  };
+  }, [saveFormData, watch]);
 
   return (
-    <FormProvider {...methods}>
-      <Box
-        sx={{
-          maxWidth: '600px',
-          margin: '0 auto',
-          padding: '20px',
-          border: '5px solid white',
-          borderRadius: '15px',
-          background: 'rgb(11, 20, 31)',
-        }}
-      >
-        <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
-          {isEditing ? 'Редактирование услуги' : 'Создание услуги'}
-        </Typography>
-
-        <Stepper
-          activeStep={activeStep}
+    <>
+      <FormProvider {...methods}>
+        <Box
           sx={{
-            mb: '15px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '10px',
-            '@media (max-width: 440px)': {
-              display: 'none',
-            },
+            maxWidth: '600px',
+            margin: '0 auto',
+            padding: '20px',
+            border: '5px solid white',
+            borderRadius: '15px',
+            background: 'rgb(11, 20, 31)',
           }}
         >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+          <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
+            {isEditing ? 'Редактирование услуги' : 'Создание услуги'}
+          </Typography>
 
-        <Box component='form' onSubmit={handleSubmit(onSubmit)}>
-          {activeStep === 0 && <BaseStep />}
-          {activeStep === 1 && <CategoryStep />}
-
-          <StepNavigation
+          <Stepper
             activeStep={activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            stepsLength={steps.length}
-          />
+            sx={{
+              mb: '15px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '10px',
+              '@media (max-width: 440px)': {
+                display: 'none',
+              },
+            }}
+          >
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+
+          <Box component='form' onSubmit={methods.handleSubmit(onSubmit)}>
+            {activeStep === 0 && <BaseStep />}
+            {activeStep === 1 && <CategoryStep />}
+
+            <Container sx={{ marginTop: '10px' }}>
+              {errors.root ? (
+                <CustomError errorType='warning' errorText={errors.root?.message} />
+              ) : isSubmitting ? (
+                <CustomSpinner size={50} />
+              ) : isSubmitted ? (
+                <Button component={Link} to={PATHS.mainPage} variant='contained'>
+                  Запись создана, перейти на главную страницу
+                </Button>
+              ) : null}
+            </Container>
+
+            <StepNavigation
+              activeStep={activeStep}
+              handleBack={handleBack}
+              handleNext={handleNext}
+              stepsLength={steps.length}
+            />
+          </Box>
         </Box>
-      </Box>
-    </FormProvider>
+      </FormProvider>
+    </>
   );
 };

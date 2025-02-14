@@ -11,7 +11,7 @@ import { Control, Controller, FieldValues, FieldErrors, Path } from 'react-hook-
 interface CustomSelectProps<T extends FieldValues> extends Omit<SelectProps, 'name'> {
   name: Path<T>;
   label: string;
-  options: { value: string | number; label: string }[];
+  options: { value: string; label: string }[];
   errors: FieldErrors<T>;
   control: Control<T>;
 }
@@ -33,7 +33,7 @@ export const CustomSelect = <T extends FieldValues>({
           <InputLabel id='demo-controlled-open-select-label'>
             {label} {field.value ? '' : 'не выбраны'}
           </InputLabel>
-          <Select {...field} label={label} {...rest}>
+          <Select {...field} label={label} value={field.value || ''} {...rest}>
             {options.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}

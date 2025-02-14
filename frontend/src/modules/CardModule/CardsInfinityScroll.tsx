@@ -1,8 +1,8 @@
 import { useInterSection } from '@/shared';
 import { CardComponent } from './components/CardComponent';
-import { useCardList } from './hooks/useCardList';
 import { CustomError, CustomSpinner } from '@/ui';
 import { Box } from '@mui/material';
+import { useCardList } from './hooks';
 
 export const CardsInfinityScroll = () => {
   const { error, isLoading, cardItems, fetchNextPage, hasNextPage, isFetchingNextPage } =

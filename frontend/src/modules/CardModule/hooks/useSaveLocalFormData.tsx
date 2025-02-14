@@ -8,17 +8,17 @@ const localStorageKey = 'formDataGithub@JustDoinG';
  * Управляет данными в localStorage, поддерживая только два значения: -1 и id.
  * При получении нового изменения в новом id удаляет старый.
  */
-export const useFormData = (apiData?: CardDto) => {
+export const useSaveLocalFormData = (apiData?: CardDto) => {
   const [formData, setFormData] = useState<CardDto | undefined>(apiData);
 
   // Функция для получения ключа localStorage на основе ID
-  const getStorageKey = (id?: number): string => {
-    return `${localStorageKey}_${typeof id !== 'undefined' ? id : -1}`;
+  const getStorageKey = (id: number): string => {
+    return `${localStorageKey}_${typeof id === 'number' ? id : -1}`;
   };
 
   useEffect(() => {
     const id = apiData?.id;
-    const storageKey = getStorageKey(id);
+    const storageKey = getStorageKey(id ? id : -1);
     const savedData = localStorage.getItem(storageKey);
 
     if (savedData) {
@@ -55,10 +55,9 @@ export const useFormData = (apiData?: CardDto) => {
   };
 
   // Очистка данных из localStorage
-  const clearFormData = (id?: number) => {
+  const clearFormData = (id: number) => {
     const storageKey = getStorageKey(id);
     localStorage.removeItem(storageKey);
-    setFormData(undefined);
   };
 
   return {

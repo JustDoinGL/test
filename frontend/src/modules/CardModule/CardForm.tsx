@@ -1,9 +1,9 @@
 import { Link, useSearchParams } from 'react-router';
 import { MultiStepForm } from './components/MultiStepForm';
-import { useGetCard } from './hooks/useCard';
 import { CustomError, CustomSpinner } from '@/ui';
 import { Box, Button } from '@mui/material';
 import { PATHS } from '@/assets';
+import { useGetCard } from './hooks';
 
 export const CardForm = () => {
   const [searchParams] = useSearchParams();

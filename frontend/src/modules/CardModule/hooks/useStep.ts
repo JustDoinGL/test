@@ -7,13 +7,17 @@ export const useStep = (initialStep = 0) => {
     e.preventDefault();
     setActiveStep((prev) => prev + 1);
   };
+
   const handleBack = () => {
     setActiveStep((prev) => prev - 1);
   };
+
+  const resetStep = () => setActiveStep(0);
 
   return {
     activeStep,
     handleNext,
     handleBack,
+    resetStep,
   };
 };

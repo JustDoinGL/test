@@ -11,10 +11,9 @@ const ItemTypes = {
 const app = express();
 app.use(bodyParser.json());
 
-
 let items = [
   {
-    id: 0,
+    id: 1,
     name: "Квартира в центре города",
     description: "Просторная квартира с новым ремонтом.",
     location: "Москва",
@@ -25,7 +24,7 @@ let items = [
     price: 8000000,
   },
   {
-    id: 1,
+    id: 2,
     name: "Новый автомобиль",
     description: "Продается новый автомобиль, пробег 0.",
     location: "Санкт-Петербург",
@@ -37,7 +36,7 @@ let items = [
     price: 2500000,
   },
   {
-    id: 2,
+    id: 3,
     name: "Услуги репетитора",
     description: "Опытный репетитор по математике и физике.",
     location: "Казань",
@@ -47,7 +46,7 @@ let items = [
     cost: 1500,
   },
   {
-    id: 3,
+    id: 4,
     name: "Просторный дом",
     description: "Дом с участком 10 соток.",
     location: "Екатеринбург",
@@ -58,7 +57,7 @@ let items = [
     price: 15000000,
   },
   {
-    id: 4,
+    id: 5,
     name: "Скутер",
     description: "Скутер в отличном состоянии.",
     location: "Москва",
@@ -70,7 +69,7 @@ let items = [
     price: 70000,
   },
   {
-    id: 5,
+    id: 6,
     name: "Услуги фотографа",
     description: "Профессиональная фотосессия.",
     location: "Нижний Новгород",
@@ -106,7 +105,8 @@ app.post("/items", (req, res) => {
       }
       break;
     case ItemTypes.AUTO:
-      if (!rest.brand || !rest.model || !rest.year) { // В тз необязательное поле - !rest.mileage
+      if (!rest.brand || !rest.model || !rest.year) {
+        // В тз необязательное поле - !rest.mileage
         return res
           .status(400)
           .json({ error: "Missing required fields for Auto" });
@@ -132,14 +132,14 @@ app.post("/items", (req, res) => {
     ...rest,
   };
 
-  items.push(item);
+  items.unshift(item); //Для вставления в начало
   res.status(201).json(item);
 });
 
 // Получение всех объявлений с пагинацией
 app.get("/items", (req, res) => {
-  const { page = 1, limit = 10 } = req.query;
-  console.log(req.query)
+  const { page = 1, limit = 5 } = req.query;
+  console.log(req.query);
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
@@ -165,13 +165,22 @@ app.get("/items/:id", (req, res) => {
 
 // Обновление объявления по его id
 app.put("/items/:id", (req, res) => {
-  const item = items.find((i) => i.id === parseInt(req.params.id, 10));
-  if (item) {
-    Object.assign(item, req.body);
-    res.json(item);
-  } else {
-    res.status(404).send("Item not found");
+  const itemId = parseInt(req.params.id, 10); // Преобразуем id в число
+  const itemIndex = items.findIndex((i) => i.id === itemId); // Находим индекс элемента
+
+  if (itemIndex === -1) {
+    // Если элемент не найден
+    return res.status(404).json({ message: "Item not found" });
   }
+
+  // Обновляем элемент
+  const updatedItem = { ...items[itemIndex], ...req.body }; // Создаем новый объект с обновленными данными
+  items[itemIndex] = updatedItem; // Заменяем старый объект на новый
+
+  console.log("Updated item:", updatedItem); // Логируем обновленный элемент
+  console.log("All items:", items); // Логируем весь список элементов
+
+  res.json(updatedItem); // Возвращаем обновленный элемент
 });
 
 // Удаление объявления по его id
@@ -196,5 +205,7 @@ if (process.env.NODE_ENV === "development") {
 const PORT = process.env.BACKEND_PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server mode: ${process.env.NODE_ENV} is running on port ${PORT}`);
+  console.log(
+    `Server mode: ${process.env.NODE_ENV} is running on port ${PORT}`
+  );
 });

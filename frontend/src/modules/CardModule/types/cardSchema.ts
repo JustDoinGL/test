@@ -18,7 +18,7 @@ const baseSchema = z.object({
   location: z.string().min(1, 'Локация обязательна').max(99, 'Слишком длинное название локации'),
   photo: z
     .string()
-    .max(99, 'Слишком длинная сылка')
+    .max(999_999_999, 'Слишком длинная сылка')
     .refine(
       (value: string) => {
         const words = value.trim().split(/\s+/); // Разбиваем текст по пробелам
@@ -74,7 +74,6 @@ const autoSchema = baseSchema.extend({
     toOptionalNumberZodHelper,
     z
       .number()
-      .min(100, 'Пробег не может быть таким маленьким')
       .max(999_999_999_999, 'Пробег не может быть больше 999 999 999 999')
       .nullable()
       .optional()

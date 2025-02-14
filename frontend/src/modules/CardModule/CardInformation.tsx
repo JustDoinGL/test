@@ -1,9 +1,9 @@
 import { CardTypes, PATHS } from '@/assets';
 import { CustomError, CustomImage, CustomNotFound } from '@/ui';
 import { Box, Button, styled, Typography } from '@mui/material';
-import { useGetCard } from './hooks/useCard';
 import { AutoCard, RealEstateCard, ServiceCard } from './components';
 import { Link } from 'react-router';
+import { useGetCard } from './hooks';
 
 const Container = styled(Box)(({ theme }) => ({
   padding: theme.spacing(4),

@@ -22,5 +22,5 @@ export const toOptionalNumberZodHelper = (val: unknown): number | undefined | nu
 
   // Пытаемся преобразовать значение в число
   const num = Number(val);
-  return isNaN(num) ? undefined : num;
+  return isNaN(num) ? null : num;
 };

@@ -1,46 +1,74 @@
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, Controller } from 'react-hook-form';
 import { TextField, Box } from '@mui/material';
 import { CardUpdateFirst } from '../../types/cardSchema';
 import { CustomSelect } from '@/ui';
 import { typesArr } from '@/assets';
 
 export const BaseStep = () => {
-  const { register, formState, control } = useFormContext<CardUpdateFirst>();
+  const { control, formState } = useFormContext<CardUpdateFirst>();
   const { errors } = formState;
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      <TextField
-        multiline
-        label='Название'
-        {...register('name')}
-        error={!!errors.name}
-        helperText={errors.name?.message?.toString()}
+      <Controller
+        name='name'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <TextField
+            {...field}
+            multiline
+            label='Название'
+            error={!!errors.name}
+            helperText={errors.name?.message?.toString()}
+          />
+        )}
       />
 
-      <TextField
-        multiline
-        label='Описание'
-        minRows={3}
-        {...register('description')}
-        error={!!errors.description}
-        helperText={errors.description?.message?.toString()}
+      <Controller
+        name='description'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <TextField
+            {...field}
+            multiline
+            label='Описание'
+            minRows={3}
+            error={!!errors.description}
+            helperText={errors.description?.message?.toString()}
+          />
+        )}
       />
 
-      <TextField
-        multiline
-        label='Локация'
-        {...register('location')}
-        error={!!errors.location}
-        helperText={errors.location?.message?.toString()}
+      <Controller
+        name='location'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <TextField
+            {...field}
+            multiline
+            label='Локация'
+            error={!!errors.location}
+            helperText={errors.location?.message?.toString()}
+          />
+        )}
       />
 
-      <TextField
-        multiline
-        label='Фото (URL) необязательное поле'
-        {...register('photo')}
-        error={!!errors.photo}
-        helperText={errors.photo?.message?.toString()}
+      <Controller
+        name='photo'
+        control={control}
+        defaultValue=''
+        render={({ field }) => (
+          <TextField
+            {...field}
+            multiline
+            label='Фото (URL) необязательное поле'
+            error={!!errors.photo}
+            helperText={errors.photo?.message?.toString()}
+          />
+        )}
       />
 
       <CustomSelect

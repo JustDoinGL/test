@@ -11,7 +11,7 @@ export type PaginatedResult<T> = {
 };
 
 export const cardListApi = {
-  baseKey: 'list',
+  baseKey: 'card',
 
   getCard: (id: string | null) => {
     return queryOptions({
@@ -44,14 +44,14 @@ export const cardListApi = {
     });
   },
 
-  updateCard: (data: CardUpdateSecond & { id: string }) => {
+  updateCard: (data: CardUpdateSecond & { id: number }) => {
     return jsonApiInstance<CardUpdateSecond>(`/items/${data.id}`, {
       method: 'PUT',
       json: data,
     });
   },
 
-  deleteCard: (id: string) => {
+  deleteCard: (id: number) => {
     return jsonApiInstance(`/items/${id}`, {
       method: 'DELETE',
     });
