@@ -2,7 +2,7 @@ import { CAR_VALUES, CardTypes, PROPERTY_VALUES, SERVICE_VALUES } from '@/assets
 import { z } from 'zod';
 
 export const searchSchema = z.object({
-  type: z.enum([CardTypes.SERVICES, CardTypes.AUTO, CardTypes.REAL_ESTATE]).optional(),
+  type: z.enum([CardTypes.SERVICES, CardTypes.AUTO, CardTypes.REAL_ESTATE]),
   serviceType: z.enum(SERVICE_VALUES).optional(),
   experience: z.number().optional(),
   cost: z.number().optional(),

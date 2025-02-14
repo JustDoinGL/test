@@ -13,7 +13,7 @@ export const CardsInfinityScroll = () => {
 
   if (isLoading) {
     return Array.from({ length: 5 }, (_, index) => (
-      <Skeleton key={index} variant='rounded' width={400} height={400} sx={{ mb: '20px' }} />
+      <Skeleton key={index} variant='rounded' width={500} height={470} sx={{ mb: '20px' }} />
     ));
   }
 

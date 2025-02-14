@@ -2,9 +2,23 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CardTypesArr } from '@/assets';
 import { useCustomSearchParams } from './hooks';
-import { Box, Button } from '@mui/material';
+import { Button, styled, Typography } from '@mui/material';
 import { CustomSelect } from '@/ui';
 import { SearchFormValues, searchSchema } from './types/searchSchema';
+
+const StyledForm = styled('form')(() => ({
+  maxWidth: '400px',
+  width: '100%',
+  maxHeight: '500px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+  margin: '0 auto',
+  padding: '20px',
+  border: '5px solid white',
+  borderRadius: '15px',
+  background: 'rgb(11, 20, 31)',
+}));
 
 export const SearchCardForm = () => {
   const { setSearchParams } = useCustomSearchParams();
@@ -25,7 +39,9 @@ export const SearchCardForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <Box onSubmit={handleSubmit(onSubmit)} component='form'>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <Typography variant='h5'>Дополнительные фильтры</Typography>
+
         <CustomSelect
           control={control}
           errors={errors}
@@ -174,9 +190,13 @@ export const SearchCardForm = () => {
         </>
       )} */}
 
-        {/* Кнопка отправки формы */}
-        <Button type='submit'>Применить фильтры</Button>
-      </Box>
+        <Button type='submit' variant='contained'>
+          Применить фильтры
+        </Button>
+        <Button type='submit' variant='contained'>
+          Сбросить фильтры
+        </Button>
+      </StyledForm>
     </FormProvider>
   );
 };

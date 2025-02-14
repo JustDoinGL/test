@@ -17,7 +17,7 @@ export const SearchCardInput = () => {
   }, [debouncedSearchTerm, setSearchParams]);
 
   return (
-    <Box margin='0 auto' width='100%' maxWidth='400px'>
+    <Box margin='0 auto' width='100%' maxWidth='370px'>
       <TextField
         type='text'
         value={searchTerm}

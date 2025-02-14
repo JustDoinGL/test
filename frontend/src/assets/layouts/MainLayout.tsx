@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Container } from '@mui/material';
+import { AppBar, Toolbar, Box } from '@mui/material';
 import { NavLink, Outlet, useSearchParams } from 'react-router';
 import styled from '@emotion/styled';
 import { PATHS } from '@/assets';
@@ -35,9 +35,9 @@ export const MainLayout = () => {
           </SCNavLink>
         </Toolbar>
       </AppBar>
-      <Container sx={{ marginTop: 4 }}>
+      <Box sx={{ margin: '0 auto', maxWidth: '1200px', marginTop: 4, p: 0 }}>
         <Outlet />
-      </Container>
+      </Box>
     </>
   );
 };
