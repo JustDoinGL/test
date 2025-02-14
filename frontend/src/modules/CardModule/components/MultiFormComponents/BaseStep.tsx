@@ -2,7 +2,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import { TextField, Box } from '@mui/material';
 import { CardUpdateFirst } from '../../types/cardSchema';
 import { CustomSelect } from '@/ui';
-import { typesArr } from '@/assets';
+import { CardTypesArr } from '@/assets';
 
 export const BaseStep = () => {
   const { control, formState } = useFormContext<CardUpdateFirst>();
@@ -76,7 +76,7 @@ export const BaseStep = () => {
         errors={errors}
         label='Категория'
         name='type'
-        options={typesArr}
+        options={CardTypesArr}
       />
     </Box>
   );

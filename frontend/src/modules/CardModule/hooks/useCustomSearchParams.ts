@@ -2,7 +2,8 @@ import { useSearchParams } from 'react-router';
 import { useCallback, useMemo } from 'react';
 import { CAR_VALUES, CardTypes, PROPERTY_VALUES, SERVICE_VALUES } from '@/assets';
 
-type CardType = keyof typeof CardTypes;
+type CardType = typeof CardTypes;
+type CardTypeValue = CardType[keyof CardType];
 
 type ServiceType = (typeof SERVICE_VALUES)[number];
 type CarBrand = (typeof CAR_VALUES)[number];
@@ -10,7 +11,7 @@ type PropertyType = (typeof PROPERTY_VALUES)[number];
 
 interface SearchParams {
   q?: string;
-  type?: CardType;
+  type?: CardTypeValue;
   serviceType?: ServiceType;
   experience?: number;
   cost?: number;
@@ -29,7 +30,7 @@ export const useCustomSearchParams = () => {
   const searchParamsObject = useMemo(() => {
     return {
       q: searchParams.get('q') || undefined,
-      type: (searchParams.get('type') as CardType) || undefined,
+      type: (searchParams.get('type') as CardTypeValue) || undefined,
       serviceType: (searchParams.get('serviceType') as ServiceType) || undefined,
       experience: Number(searchParams.get('experience')) || undefined,
       cost: Number(searchParams.get('cost')) || undefined,
@@ -59,8 +60,6 @@ export const useCustomSearchParams = () => {
     },
     [searchParams, setSearchParams]
   );
-
-  console.log(searchParamsObject);
 
   return { searchParams: searchParamsObject, setSearchParams: updateSearchParams };
 };

@@ -1,5 +1,5 @@
 import { useInterSection } from '@/shared';
-import { CardComponent } from './components/CardComponent';
+import { CardComponent } from './components/BaseCard';
 import { CustomError, CustomSpinner } from '@/ui';
 import { Box } from '@mui/material';
 import { useCardList } from './hooks';

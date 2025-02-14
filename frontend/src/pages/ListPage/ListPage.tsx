@@ -1,6 +1,7 @@
 import { PATHS } from '@/assets';
 import { CardsInfinityScroll, SearchCard } from '@/modules';
 import { Container } from '@mui/material';
+import { ZZZZZ } from 'src/modules/CardModule/SeacrchCardForm';
 
 export const ListPage = () => {
   return (
@@ -9,6 +10,7 @@ export const ListPage = () => {
       sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
     >
       <SearchCard />
+      <ZZZZZ />
       <CardsInfinityScroll />
     </Container>
   );

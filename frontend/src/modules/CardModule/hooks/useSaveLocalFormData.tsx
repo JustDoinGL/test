@@ -38,7 +38,6 @@ export const useSaveLocalFormData = (apiData?: CardDto) => {
     if (id && id !== -1) {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        console.log(key);
         if (
           key &&
           key.startsWith(localStorageKey + '_') &&

@@ -4,7 +4,7 @@ export const CardTypes = {
   SERVICES: 'Услуги',
 } as const;
 
-export const typesArr = [
+export const CardTypesArr = [
   { label: CardTypes.REAL_ESTATE, value: CardTypes.REAL_ESTATE },
   { label: CardTypes.AUTO, value: CardTypes.AUTO },
   { label: CardTypes.SERVICES, value: CardTypes.SERVICES },

@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router';
-import { MultiStepForm } from './components/MultiStepForm';
+import { MultiStepForm } from './components/BaseMultiForm';
 import { CustomError, CustomSpinner } from '@/ui';
 import { Box, Button } from '@mui/material';
 import { PATHS } from '@/assets';
@@ -8,7 +8,6 @@ import { useGetCard } from './hooks';
 export const CardForm = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
-
   const isValidId = id && !isNaN(Number(id));
 
   const { error, isLoading, card } = useGetCard(id, isValidId);

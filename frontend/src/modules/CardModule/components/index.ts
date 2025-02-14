@@ -1,6 +1,6 @@
-export { AutoCard } from './CardInformation/AutoCard';
-export { RealEstateCard } from './CardInformation/RealEstateCard';
-export { ServiceCard } from './CardInformation/ServiceCard';
+export { AutoCard } from './BaseCardComponents/AutoCard';
+export { RealEstateCard } from './BaseCardComponents/RealEstateCard';
+export { ServiceCard } from './BaseCardComponents/ServiceCard';
 
-export { CardComponent } from './CardComponent';
-export { MultiStepForm } from './MultiStepForm';
+export { CardComponent } from './BaseCard';
+export { MultiStepForm } from './BaseMultiForm';
