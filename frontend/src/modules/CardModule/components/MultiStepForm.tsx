@@ -84,7 +84,7 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
                 <CustomSpinner size={50} />
               ) : isSubmitted ? (
                 <Button component={Link} to={PATHS.mainPage} variant='contained'>
-                  Запись создана, перейти на главную страницу
+                  Запись создана! Нажмите кнопку что перейти на главную страницу
                 </Button>
               ) : null}
             </Container>

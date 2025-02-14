@@ -81,8 +81,8 @@ let items = [
 ];
 
 const makeCounter = () => {
-  let count = 0;
-  return () => count++;
+  let count = items.length;
+  return () => ++count;
 };
 
 const itemsIdCounter = makeCounter();
@@ -136,23 +136,81 @@ app.post("/items", (req, res) => {
   res.status(201).json(item);
 });
 
-// Получение всех объявлений с пагинацией
 app.get("/items", (req, res) => {
-  const { page = 1, limit = 5 } = req.query;
-  console.log(req.query);
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
+  const {
+    page = 1,
+    limit = 5,
+    q,
+    type,
+    brand,
+    model,
+    year,
+    propertyType,
+    area,
+    rooms,
+    price,
+  } = req.query;
 
-  const paginatedItems = items.slice(startIndex, endIndex);
+  const startIndex = (Number(page) - 1) * Number(limit);
+  const endIndex = Number(page) * Number(limit);
+
+  // Фильтрация по всем параметрам
+  let filteredItems = items;
+
+  if (q) {
+    filteredItems = filteredItems.filter((item) =>
+      item.name.toLowerCase().includes(String(q).toLowerCase())
+    );
+  }
+
+  if (type) {
+    filteredItems = filteredItems.filter((item) => item.type === type);
+  }
+
+  if (brand) {
+    filteredItems = filteredItems.filter((item) => item.brand === brand);
+  }
+
+  if (model) {
+    filteredItems = filteredItems.filter((item) => item.model === model);
+  }
+
+  if (year) {
+    filteredItems = filteredItems.filter((item) => item.year === Number(year));
+  }
+
+  if (propertyType) {
+    filteredItems = filteredItems.filter(
+      (item) => item.propertyType === propertyType
+    );
+  }
+
+  if (area) {
+    filteredItems = filteredItems.filter((item) => item.area === Number(area));
+  }
+
+  if (rooms) {
+    filteredItems = filteredItems.filter(
+      (item) => item.rooms === Number(rooms)
+    );
+  }
+
+  if (price) {
+    filteredItems = filteredItems.filter(
+      (item) => item.price === Number(price)
+    );
+  }
+
+  // Пагинация
+  const paginatedItems = filteredItems.slice(startIndex, endIndex);
 
   res.json({
-    totalItems: items.length,
-    totalPages: Math.ceil(items.length / limit),
+    totalItems: filteredItems.length,
+    totalPages: Math.ceil(filteredItems.length / Number(limit)),
     currentPage: Number(page),
     items: paginatedItems,
   });
 });
-
 // Получение объявления по его id
 app.get("/items/:id", (req, res) => {
   const item = items.find((i) => i.id === parseInt(req.params.id, 10));

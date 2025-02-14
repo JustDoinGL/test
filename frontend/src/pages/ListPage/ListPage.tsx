@@ -1,5 +1,5 @@
 import { PATHS } from '@/assets';
-import { CardsInfinityScroll } from '@/modules';
+import { CardsInfinityScroll, SearchCard } from '@/modules';
 import { Container } from '@mui/material';
 
 export const ListPage = () => {
@@ -8,6 +8,7 @@ export const ListPage = () => {
       data-testid={PATHS.mainPage}
       sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}
     >
+      <SearchCard />
       <CardsInfinityScroll />
     </Container>
   );

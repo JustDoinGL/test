@@ -1,7 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { cardListApi } from '../api/api';
+import { useCustomSearchParams } from './useCustomSearchParams';
 
-export function useCardList() {
+export const useCardList = () => {
+  const { searchParams } = useCustomSearchParams();
+
   const {
     data: cardItems,
     error,
@@ -10,8 +13,8 @@ export function useCardList() {
     isFetchingNextPage,
     hasNextPage,
   } = useInfiniteQuery({
-    ...cardListApi.getCardListInfinityQueryOptions(),
+    ...cardListApi.getCardListInfinityQueryOptions(searchParams),
   });
 
   return { error, cardItems, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage };
-}
+};

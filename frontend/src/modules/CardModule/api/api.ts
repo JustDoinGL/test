@@ -23,17 +23,33 @@ export const cardListApi = {
     });
   },
 
-  getCardListInfinityQueryOptions: () => {
+  getCardListInfinityQueryOptions: (searchParams?: Record<string, unknown>) => {
+    const params = new URLSearchParams();
+
+    // Добавляем только те параметры, которые не undefined
+    if (searchParams) {
+      Object.entries(searchParams).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && value !== '') {
+          params.set(key, String(value));
+        }
+      });
+    }
+
+    const queryString = params.toString();
+
     return infiniteQueryOptions({
-      queryKey: [cardListApi.baseKey, 'list'],
+      queryKey: [cardListApi.baseKey, 'list', queryString],
       queryFn: (meta) =>
-        jsonApiInstance<PaginatedResult<CardDto>>(`/items?page=${meta.pageParam}&limit=5`, {
-          signal: meta.signal,
-        }),
+        jsonApiInstance<PaginatedResult<CardDto>>(
+          `/items?page=${meta.pageParam}&limit=5&${queryString}`,
+          {
+            signal: meta.signal,
+          }
+        ),
       initialPageParam: 1,
       getNextPageParam: ({ totalPages, currentPage }) =>
         totalPages > currentPage ? currentPage + 1 : null,
-      select: (data) => data.pages.flatMap((page) => page.items),
+      select: ({ pages }) => pages.flatMap((page) => page.items),
     });
   },
 

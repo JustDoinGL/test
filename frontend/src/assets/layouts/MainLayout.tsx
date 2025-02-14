@@ -32,7 +32,7 @@ export const MainLayout = () => {
               to={PATHS.formPage}
               style={({ isActive }) => (isActive && id ? { display: 'none' } : {})}
             >
-              Создать объявление
+              Разместить объявление
             </SCNavLink>
           </nav>
         </Toolbar>

@@ -13,12 +13,12 @@ export const useSaveLocalFormData = (apiData?: CardDto) => {
 
   // Функция для получения ключа localStorage на основе ID
   const getStorageKey = (id: number): string => {
-    return `${localStorageKey}_${typeof id === 'number' ? id : -1}`;
+    return `${localStorageKey}_${id}`;
   };
 
   useEffect(() => {
     const id = apiData?.id;
-    const storageKey = getStorageKey(id ? id : -1);
+    const storageKey = getStorageKey(typeof id === 'number' ? id : -1); // Из-за того что id может быть равен 0
     const savedData = localStorage.getItem(storageKey);
 
     if (savedData) {
@@ -32,9 +32,9 @@ export const useSaveLocalFormData = (apiData?: CardDto) => {
   // Сохранение данных в localStorage
   const saveFormData = (data: CardDto) => {
     const id = data.id;
-    const storageKey = getStorageKey(id);
+    const storageKey = getStorageKey(typeof id === 'number' ? id : -1); // Из-за того что id может быть равен 0
 
-    // Если ID определен и не равен -1, очищаем все другие ID в localStorage
+    // Если ID определен и не равен -1, очищаем все другие ID в localStorage которые не имют -1
     if (id && id !== -1) {
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
