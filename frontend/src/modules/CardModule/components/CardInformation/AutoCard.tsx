@@ -12,15 +12,16 @@ const StyledCard = styled(Box)(({ theme }) => ({
 }));
 
 export const AutoCard = ({ card }: { card: IAuto }) => {
+  const { year, model, brand, mileage } = card;
   return (
     <StyledCard>
       <Box mt={2}>
         <Typography variant='h6'>Детали:</Typography>
-        <Typography>Марка: {card.brand}</Typography>
-        <Typography>Модель: {card.model}</Typography>
-        <Typography>Год выпуска: {card.year}</Typography>
+        <Typography>Марка: {brand}</Typography>
+        <Typography>Модель: {model}</Typography>
+        <Typography>Год выпуска: {year}</Typography>
         <Typography>
-          Пробег: <FormattedNumber value={card.mileage} /> км
+          Пробег: {mileage ? `${(<FormattedNumber value={mileage} />)} км` : 'Не указак'}
         </Typography>
       </Box>
     </StyledCard>

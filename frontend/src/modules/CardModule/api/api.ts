@@ -1,6 +1,7 @@
 import { jsonApiInstance } from '@/shared';
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query';
 import { CardDto } from '../types/cardDto';
+import { CardUpdateSecond } from '../types/cardSchema';
 
 export type PaginatedResult<T> = {
   items: T[];
@@ -36,15 +37,15 @@ export const cardListApi = {
     });
   },
 
-  createCard: (data: CardDto) => {
-    return jsonApiInstance<CardDto>(`/items`, {
+  createCard: (data: CardUpdateSecond) => {
+    return jsonApiInstance<CardUpdateSecond>(`/items`, {
       method: 'POST',
       json: data,
     });
   },
 
-  updateCard: (data: Partial<CardDto> & { id: string }) => {
-    return jsonApiInstance<CardDto>(`/items/${data.id}`, {
+  updateCard: (data: CardUpdateSecond & { id: string }) => {
+    return jsonApiInstance<CardUpdateSecond>(`/items/${data.id}`, {
       method: 'PUT',
       json: data,
     });

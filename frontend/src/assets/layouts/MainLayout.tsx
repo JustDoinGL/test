@@ -30,7 +30,7 @@ export const MainLayout = () => {
             <SCNavLink to={PATHS.mainPage}>Главная</SCNavLink>
             <SCNavLink
               to={PATHS.formPage}
-              style={({ isActive }) => (isActive && id ? { backgroundColor: 'transparent' } : {})}
+              style={({ isActive }) => (isActive && id ? { display: 'none' } : {})}
             >
               Создать объявление
             </SCNavLink>

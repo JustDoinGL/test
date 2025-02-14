@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Stepper, Step, StepLabel, Typography } from '@mui/material';
@@ -5,6 +6,7 @@ import { useStep } from '../hooks/useStep';
 import { BaseStep, CategoryStep, StepNavigation } from './Form';
 import { cardSchemaFirst, cardSchemaSecond, CardUpdateSecond } from '../types/cardSchema';
 import { CardDto } from '../types/cardDto';
+import { useFormData } from '../hooks/useFormData';
 
 const steps = ['Основной шаг', 'Дополнительный шаг'];
 
@@ -15,19 +17,29 @@ type MultiStepFormProps = {
 
 export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) => {
   const { activeStep, handleNext, handleBack } = useStep();
+  const { formData, saveFormData, clearFormData } = useFormData(defaultValues);
 
   const methods = useForm<CardUpdateSecond>({
     resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
-    defaultValues: defaultValues,
-    values: defaultValues,
+    defaultValues: formData,
+    values: formData,
     mode: 'onTouched',
   });
+  const { handleSubmit, watch } = methods;
 
-  const { handleSubmit } = methods;
+  useEffect(() => {
+    const subscription = watch((value) => {
+      saveFormData(value as CardDto);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch, saveFormData]);
 
   const onSubmit: SubmitHandler<CardUpdateSecond> = (data) => {
-    if (activeStep === 1) {
-      console.log('Форма отправлена:', data);
+    if (data.id) {
+      clearFormData(data.id);
+    } else {
+      clearFormData(-1);
     }
   };
 

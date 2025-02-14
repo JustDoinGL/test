@@ -21,7 +21,7 @@ export interface IAuto extends BaseAd {
   brand: (typeof CAR_VALUES)[number];
   model: string;
   year: number;
-  mileage: number;
+  mileage?: number;
 }
 
 export interface IService extends BaseAd {
