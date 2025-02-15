@@ -11,7 +11,7 @@ export const useUpdateCard = () => {
       queryClient.invalidateQueries(cardListApi.getCardListInfinityQueryOptions());
     },
     onError: (error) => {
-      console.error('Ошибка при обновлении карточки:', error);
+      console.log('Ошибка при обновлении карточки:', error);
     },
   });
 };
