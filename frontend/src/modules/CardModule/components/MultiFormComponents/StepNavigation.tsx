@@ -12,8 +12,21 @@ type TStepNavigation = {
 export const StepNavigation = (props: TStepNavigation) => {
   const { activeStep, handleNext, stepsLength, handleBack } = props;
 
-  const { formState } = useFormContext<CardUpdateFirst | CardUpdateSecond>();
+  const { formState, trigger } = useFormContext<CardUpdateFirst, CardUpdateSecond>();
   const { isValid, isSubmitting } = formState;
+
+  const validateFirstStep = async () => {
+    const fieldsToValidate = ['name', 'description', 'location', 'type'];
+    return await trigger(fieldsToValidate as unknown as keyof CardUpdateFirst);
+  };
+
+  const handleNextStep = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const isFirstStepValid = await validateFirstStep();
+
+    if (isFirstStepValid) {
+      handleNext(e);
+    }
+  };
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2 }}>
@@ -21,11 +34,11 @@ export const StepNavigation = (props: TStepNavigation) => {
         Назад
       </Button>
       {activeStep === stepsLength - 1 ? (
-        <Button type='submit' variant='contained' disabled={isSubmitting}>
+        <Button type='submit' variant='contained' disabled={isSubmitting || !isValid}>
           Отправить
         </Button>
       ) : (
-        <Button type='button' onClick={(e) => isValid && handleNext(e)} variant='contained'>
+        <Button type='button' onClick={handleNextStep} variant='contained'>
           Далее
         </Button>
       )}

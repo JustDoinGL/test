@@ -54,22 +54,34 @@ export const cardListApi = {
   },
 
   createCard: (data: CardUpdateSecond) => {
-    return jsonApiInstance<CardUpdateSecond>(`/items`, {
-      method: 'POST',
-      json: data,
-    });
+    return jsonApiInstance<CardUpdateSecond>(
+      `/items`,
+      {
+        method: 'POST',
+        json: data,
+      },
+      true
+    );
   },
 
   updateCard: (data: CardUpdateSecond & { id: number }) => {
-    return jsonApiInstance<CardUpdateSecond>(`/items/${data.id}`, {
-      method: 'PUT',
-      json: data,
-    });
+    return jsonApiInstance<CardUpdateSecond>(
+      `/items/${data.id}`,
+      {
+        method: 'PUT',
+        json: data,
+      },
+      true
+    );
   },
 
   deleteCard: (id: number) => {
-    return jsonApiInstance(`/items/${id}`, {
-      method: 'DELETE',
-    });
+    return jsonApiInstance(
+      `/items/${id}`,
+      {
+        method: 'DELETE',
+      },
+      true
+    );
   },
 };

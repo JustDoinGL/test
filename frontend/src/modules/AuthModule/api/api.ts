@@ -36,14 +36,22 @@ export const authListApi = {
   },
 
   logout: () => {
-    return jsonApiInstance<LogoutResponse>(`/logout`, {
-      method: 'POST',
-    });
+    return jsonApiInstance<LogoutResponse>(
+      `/logout`,
+      {
+        method: 'POST',
+      },
+      true
+    );
   },
 
   checkAuth: () => {
-    return jsonApiInstance<CheckAuthResponse>(`/check-auth`, {
-      method: 'GET',
-    });
+    return jsonApiInstance<CheckAuthResponse>(
+      `/check-auth`,
+      {
+        method: 'GET',
+      },
+      true
+    );
   },
 };

@@ -2,33 +2,44 @@ import { getToken } from './validateAuthToken';
 
 const BASE_URL = import.meta.env.BACKEND_URL;
 
+// Кастомный класс для ошибок API
 class ApiError extends Error {
   constructor(public response: Response) {
-    super('ApiError:' + response.status);
+    super(`API Error: ${response.status} - ${response.statusText}`);
+    this.name = 'ApiError';
   }
 }
 
-export const jsonApiInstance = async <T>(url: string, init?: RequestInit & { json?: unknown }) => {
-  const token = getToken();
-
+export const jsonApiInstance = async <T>(
+  url: string,
+  init?: RequestInit & { json?: unknown },
+  requiresAuth: boolean = false
+): Promise<T> => {
   const headers = new Headers(init?.headers);
-  headers.set('Authorization', `Bearer ${token}`);
+
+  if (requiresAuth) {
+    const token = getToken();
+
+    if (!token) {
+      throw new Error('Authorization token is missing');
+    }
+
+    headers.set('Authorization', `Bearer ${token}`);
+  }
 
   if (init?.json) {
     headers.set('Content-Type', 'application/json');
     init.body = JSON.stringify(init.json);
   }
 
-  const result = await fetch(`${BASE_URL}${url}`, {
+  const response = await fetch(`${BASE_URL}${url}`, {
     ...init,
     headers,
   });
 
-  if (!result.ok) {
-    throw new ApiError(result);
+  if (!response.ok) {
+    throw new ApiError(response);
   }
 
-  const data = (await result.json()) as Promise<T>;
-
-  return data;
+  return response.json() as Promise<T>;
 };

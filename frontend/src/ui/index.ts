@@ -6,3 +6,4 @@ export { CustomNotFound } from './CustomNotFound/CustomNotFound';
 export { FormattedNumber } from './FormattedNumber/FormattedNumber';
 export { CustomBackButton } from './CustomBackButton/CustomBackButton';
 export { CustomSelect } from './CustomSelect/CustomSelect';
+export { CustomModal } from './CustomModal/CustomModal';

@@ -11,7 +11,7 @@ export const useCardCreate = () => {
       queryClient.invalidateQueries(cardListApi.getCardListInfinityQueryOptions());
     },
     onError: (error) => {
-      console.log('Ошибка при создании карточки:', error);
+      console.error('Ошибка при создании карточки:', error);
     },
   });
 };

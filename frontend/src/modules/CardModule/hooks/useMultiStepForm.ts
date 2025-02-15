@@ -9,6 +9,7 @@ type useMultiStepFormProps = {
   values?: CardDto;
   activeStep: number;
   resetStep: () => void;
+  setIsOpenModal: (value: boolean) => void;
 };
 
 export const useMultiStepForm = ({
@@ -16,6 +17,7 @@ export const useMultiStepForm = ({
   values,
   activeStep,
   resetStep,
+  setIsOpenModal,
 }: useMultiStepFormProps) => {
   const createCard = useCardCreate();
   const updateCard = useUpdateCard();
@@ -24,10 +26,7 @@ export const useMultiStepForm = ({
     resolver: zodResolver(activeStep === 1 ? cardSchemaSecond : cardSchemaFirst),
     defaultValues: {},
     values,
-    mode: 'onChange',
-    resetOptions: {
-      keepIsSubmitSuccessful: true,
-    },
+    mode: 'onTouched',
   });
 
   const { control, setError, reset } = methods;
@@ -38,16 +37,15 @@ export const useMultiStepForm = ({
     try {
       if (data.id) {
         await updateCard.mutateAsync({ ...data, id: data.id });
-        clearFormData(-1);
         clearFormData(data.id);
         resetStep();
-        reset({ name: '' });
       } else {
         await createCard.mutateAsync(data);
         clearFormData(-1);
         resetStep();
         reset({ name: '' });
       }
+      setIsOpenModal(true);
     } catch (error) {
       if (error instanceof Error) {
         setError('root', { message: `Произошла ошибка: ${error.message}` });

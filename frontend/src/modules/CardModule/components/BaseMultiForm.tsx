@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Stepper,
@@ -7,13 +7,12 @@ import {
   Typography,
   Button,
   Container,
-  Modal,
   styled,
 } from '@mui/material';
 import { FormProvider } from 'react-hook-form';
 import { BaseStep, CategoryStep, StepNavigation } from './MultiFormComponents';
 import { useStep, useSaveLocalFormData } from '../hooks';
-import { CustomError, CustomSpinner } from '@/ui';
+import { CustomError, CustomModal, CustomSpinner } from '@/ui';
 import { useMultiStepForm } from '../hooks/useMultiStepForm';
 import { CardDto } from '../types/cardDto';
 import { Link } from 'react-router';
@@ -40,12 +39,22 @@ const StyledStepper = styled(Stepper)(() => ({
   },
 }));
 
+const StyledModalContainer = styled(Box)(() => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flexWrap: 'wrap',
+  gap: '30px',
+  maxWidth: '300px',
+  margin: '0 auto',
+}));
+
 type MultiStepFormProps = {
   defaultValues?: CardDto;
   isEditing: boolean;
 };
 
 export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { activeStep, handleNext, handleBack, resetStep } = useStep();
   const { formData, saveFormData, clearFormData } = useSaveLocalFormData(defaultValues);
   const { methods, onSubmit } = useMultiStepForm({
@@ -53,10 +62,11 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
     activeStep,
     values: formData,
     resetStep,
+    setIsOpenModal,
   });
 
   const { watch, formState, handleSubmit } = methods;
-  const { errors, isSubmitting, isSubmitSuccessful } = formState;
+  const { errors, isSubmitting } = formState;
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -64,7 +74,8 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
     });
 
     return () => subscription.unsubscribe();
-  }, [saveFormData, watch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -101,18 +112,17 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
         </StyledForm>
       </FormProvider>
 
-      <Modal open={isSubmitSuccessful} onClose={() => {}}>
-        <Box
-          sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Box>
-            <Typography variant='h3'> Задача создана успещно</Typography>
-            <Button component={Link} to={PATHS.mainPage} variant='contained'>
-              На главную страницу
-            </Button>
-          </Box>
-        </Box>
-      </Modal>
+      <CustomModal open={isOpenModal} onClose={() => setIsOpenModal(false)}>
+        <StyledModalContainer>
+          <Typography variant='h4'>
+            {isEditing ? 'Задача отредактирована успещно' : 'Задача создана успещно'}
+          </Typography>
+
+          <Button component={Link} to={PATHS.mainPage} variant='contained'>
+            На главную страницу
+          </Button>
+        </StyledModalContainer>
+      </CustomModal>
     </>
   );
 };

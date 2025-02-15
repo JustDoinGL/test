@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 export const FormPage = () => {
   return (
     <Box data-testid={PATHS.formPage}>
-      <Box display='flex' justifyContent='space-between' mb='20px'>
+      <Box display='flex' justifyContent='space-around' mb='20px'>
         <CustomBackButton />
         <LogOutButton />
       </Box>

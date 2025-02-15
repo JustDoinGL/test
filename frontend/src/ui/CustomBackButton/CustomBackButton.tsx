@@ -15,7 +15,13 @@ export const CustomBackButton = ({ label = 'Назад', step = -1 }: CustomBack
   };
 
   return (
-    <Button onClick={handleBack} startIcon={<ArrowBackIcon />} variant='contained' color='primary'>
+    <Button
+      onClick={handleBack}
+      startIcon={<ArrowBackIcon />}
+      variant='contained'
+      color='primary'
+      sx={{ ml: '20px' }}
+    >
       {label}
     </Button>
   );

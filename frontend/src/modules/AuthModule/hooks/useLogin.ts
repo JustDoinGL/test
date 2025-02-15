@@ -15,7 +15,7 @@ export const useLogin = () => {
       }
     },
     onError: (error) => {
-      console.log('Ошибка при входе:', error);
+      console.error('Ошибка при входе:', error);
     },
   });
 };

@@ -12,7 +12,7 @@ export const useLogOut = () => {
       removeToken();
     },
     onError: (error) => {
-      console.log('Ошибка при выходе:', error);
+      console.error('Ошибка при выходе:', error);
     },
   });
 };
