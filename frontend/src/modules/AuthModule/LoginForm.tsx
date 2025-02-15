@@ -50,7 +50,7 @@ export const LoginForm = () => {
             render={({ field }) => (
               <TextField
                 {...field}
-                label='admin@mailr.ru'
+                label='admin@mail.ru'
                 fullWidth
                 margin='normal'
                 error={!!errors.email}

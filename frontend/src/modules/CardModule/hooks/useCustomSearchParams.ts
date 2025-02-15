@@ -44,20 +44,9 @@ export const useCustomSearchParams = () => {
     };
   }, [searchParams]);
 
+  // Обновление одного или несколи значений, так же удадене если undefined
   const updateSearchParams = useCallback(
-    (newParams: Partial<SearchParams>, isReset = false) => {
-      if (isReset && newParams.type) {
-        return searchParamsObject.q
-          ? setSearchParams({ q: searchParamsObject.q, type: newParams.type })
-          : setSearchParams({ type: newParams.type });
-      }
-
-      if (isReset) {
-        return searchParamsObject.q
-          ? setSearchParams({ q: searchParamsObject.q })
-          : setSearchParams({});
-      }
-
+    (newParams: Partial<SearchParams>) => {
       const updatedParams = new URLSearchParams(searchParams);
 
       Object.entries(newParams).forEach(([key, value]) => {
@@ -67,11 +56,24 @@ export const useCustomSearchParams = () => {
           updatedParams.delete(key);
         }
       });
-
       setSearchParams(updatedParams);
     },
-    [searchParams, searchParamsObject.q, setSearchParams]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
-  return { searchParams: searchParamsObject, setSearchParams: updateSearchParams };
+  // Сброс парметров для формы без учета поиска(q)
+  const resetParams = useCallback(() => {
+    const newSearchParams = new URLSearchParams();
+    const searchQuery = searchParams.get('q');
+
+    if (searchQuery) {
+      newSearchParams.set('q', searchQuery);
+    }
+
+    setSearchParams(newSearchParams);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { searchParams: searchParamsObject, setSearchParams: updateSearchParams, resetParams };
 };

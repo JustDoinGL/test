@@ -1,4 +1,4 @@
-import { useForm, FormProvider, useWatch } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CardTypesArr } from '@/assets';
 import { useCustomSearchParams } from './hooks';
@@ -6,7 +6,6 @@ import { Button, styled, Typography } from '@mui/material';
 import { CustomSelect } from '@/ui';
 import { SearchFormValues, searchSchema } from './types/searchSchema';
 import { CategoryStep } from './components/MultiFormComponents';
-import { useEffect } from 'react';
 
 const StyledForm = styled('form')(() => ({
   maxWidth: '400px',
@@ -23,39 +22,18 @@ const StyledForm = styled('form')(() => ({
 }));
 
 export const SearchCardForm = () => {
-  const { setSearchParams, searchParams } = useCustomSearchParams();
+  const { setSearchParams, searchParams, resetParams } = useCustomSearchParams();
 
   const methods = useForm<SearchFormValues>({
     resolver: zodResolver(searchSchema),
     defaultValues: {},
     values: searchParams,
   });
-
-  const { control, formState, handleSubmit, reset } = methods;
+  const { control, formState, handleSubmit } = methods;
   const { errors } = formState;
-
-  const type = useWatch({
-    control,
-    name: 'type',
-  });
-
-  useEffect(() => {
-    if (type) {
-      reset({
-        type: type,
-      });
-      setSearchParams({ type }, true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type]);
 
   const onSubmit = (data: SearchFormValues) => {
     setSearchParams(data);
-  };
-
-  const resetForm = () => {
-    setSearchParams({}, true);
-    reset({});
   };
 
   return (
@@ -76,7 +54,7 @@ export const SearchCardForm = () => {
         <Button type='submit' variant='contained'>
           Применить фильтры
         </Button>
-        <Button onClick={resetForm} variant='contained'>
+        <Button onClick={() => resetParams()} variant='contained'>
           Сбросить фильтры
         </Button>
       </StyledForm>

@@ -31,12 +31,13 @@ const StyledForm = styled('form')(() => ({
 }));
 
 const StyledStepper = styled(Stepper)(() => ({
-  maxWidth: '600px',
-  margin: '0 auto',
-  padding: '20px',
-  border: '5px solid white',
-  borderRadius: '15px',
-  background: 'rgb(11, 20, 31)',
+  marginBottom: '20px',
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: '10px',
+  '@media (max-width: 440px)': {
+    display: 'none',
+  },
 }));
 
 type MultiStepFormProps = {
