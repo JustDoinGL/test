@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CardDto } from '../types/cardDto';
 
-const localStorageKey = 'formDataGithub@JustDoinG';
+const localStorageKey = 'formDataGithub@JustDoinGL';
 
 /**
  * Кастомный хук для работы с данными формы.

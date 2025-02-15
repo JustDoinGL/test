@@ -1,9 +1,10 @@
-import { Box, Typography } from '@mui/material';
+import { Box, SxProps, Theme, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 
 interface CustomErrorProps {
   errorText?: string;
   errorType?: 'info' | 'warning' | 'error';
+  sx?: SxProps<Theme>;
 }
 
 const StyledBox = styled(Box)<{ type: 'info' | 'warning' | 'error' }>`
@@ -21,9 +22,9 @@ const StyledBox = styled(Box)<{ type: 'info' | 'warning' | 'error' }>`
     ${({ type }) => (type === 'info' ? '#bee5eb' : type === 'warning' ? '#ffeeba' : '#f5c6cb')};
 `;
 
-export const CustomError = ({ errorText, errorType = 'error' }: CustomErrorProps) => {
+export const CustomError = ({ errorText, errorType = 'error', sx }: CustomErrorProps) => {
   return (
-    <StyledBox type={errorType}>
+    <StyledBox type={errorType} sx={sx}>
       {errorType === 'error' && (
         <Typography variant='h6'>
           Очень жаль, произошла ошибка, попробуйте позже или перезагрузите страницу.

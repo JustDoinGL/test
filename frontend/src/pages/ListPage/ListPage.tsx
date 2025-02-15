@@ -22,7 +22,14 @@ export const ListPage = () => {
         component='main'
         sx={{ display: 'flex', justifyContent: 'space-around', gap: '20px', p: 0 }}
       >
-        <Box sx={{ overflow: 'scroll', maxHeight: 'calc(100vh - 180px)' }}>
+        <Box
+          sx={{
+            overflow: 'scroll',
+            maxHeight: 'calc(100vh - 180px)',
+            width: '100%',
+            maxWidth: '500px',
+          }}
+        >
           <CardsInfinityScroll />
         </Box>
 

@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import { SERVICE_TYPES } from '@/assets';
 import { CustomSelect } from '@/ui';
 
-export const ServiceForm = () => {
+export const ServiceForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }) => {
   const { formState, control } = useFormContext<ServiceSchema>();
   const { errors } = formState;
 
@@ -46,19 +46,20 @@ export const ServiceForm = () => {
         )}
       />
 
-      <Controller
-        name='schedule'
-        control={control}
-        defaultValue=''
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label='График работы не обязательное поле'
-            error={!!errors.schedule}
-            helperText={errors.schedule?.message?.toString()}
-          />
-        )}
-      />
+      {isRequiredRows && (
+        <Controller
+          name='schedule'
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label='График работы не обязательное поле'
+              error={!!errors.schedule}
+              helperText={errors.schedule?.message?.toString()}
+            />
+          )}
+        />
+      )}
     </>
   );
 };

@@ -45,7 +45,19 @@ export const useCustomSearchParams = () => {
   }, [searchParams]);
 
   const updateSearchParams = useCallback(
-    (newParams: Partial<SearchParams>) => {
+    (newParams: Partial<SearchParams>, isReset = false) => {
+      if (isReset && newParams.type) {
+        return searchParamsObject.q
+          ? setSearchParams({ q: searchParamsObject.q, type: newParams.type })
+          : setSearchParams({ type: newParams.type });
+      }
+
+      if (isReset) {
+        return searchParamsObject.q
+          ? setSearchParams({ q: searchParamsObject.q })
+          : setSearchParams({});
+      }
+
       const updatedParams = new URLSearchParams(searchParams);
 
       Object.entries(newParams).forEach(([key, value]) => {
@@ -58,7 +70,7 @@ export const useCustomSearchParams = () => {
 
       setSearchParams(updatedParams);
     },
-    [searchParams, setSearchParams]
+    [searchParams, searchParamsObject.q, setSearchParams]
   );
 
   return { searchParams: searchParamsObject, setSearchParams: updateSearchParams };

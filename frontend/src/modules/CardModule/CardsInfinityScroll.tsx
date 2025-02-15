@@ -25,7 +25,13 @@ export const CardsInfinityScroll = () => {
 
       <Box
         ref={cursorRef}
-        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: '20px' }}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mb: '20px',
+          width: '100%',
+        }}
       >
         {!hasNextPage && (
           <CustomError

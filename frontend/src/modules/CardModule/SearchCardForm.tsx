@@ -1,15 +1,17 @@
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { CardTypesArr } from '@/assets';
 import { useCustomSearchParams } from './hooks';
 import { Button, styled, Typography } from '@mui/material';
 import { CustomSelect } from '@/ui';
 import { SearchFormValues, searchSchema } from './types/searchSchema';
+import { CategoryStep } from './components/MultiFormComponents';
+import { useEffect } from 'react';
 
 const StyledForm = styled('form')(() => ({
   maxWidth: '400px',
   width: '100%',
-  maxHeight: '500px',
+  maxHeight: '600px',
   display: 'flex',
   flexDirection: 'column',
   gap: '10px',
@@ -21,20 +23,40 @@ const StyledForm = styled('form')(() => ({
 }));
 
 export const SearchCardForm = () => {
-  const { setSearchParams } = useCustomSearchParams();
+  const { setSearchParams, searchParams } = useCustomSearchParams();
 
   const methods = useForm<SearchFormValues>({
     resolver: zodResolver(searchSchema),
     defaultValues: {},
-    // values: searchParams,
+    values: searchParams,
   });
 
-  const { control, formState, handleSubmit } = methods;
+  const { control, formState, handleSubmit, reset } = methods;
   const { errors } = formState;
+
+  const type = useWatch({
+    control,
+    name: 'type',
+  });
+
+  useEffect(() => {
+    if (type) {
+      reset({
+        type: type,
+      });
+      setSearchParams({ type }, true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type]);
 
   const onSubmit = (data: SearchFormValues) => {
     console.log(data);
     setSearchParams(data);
+  };
+
+  const resetForm = () => {
+    setSearchParams({}, true);
+    reset({});
   };
 
   return (
@@ -50,150 +72,12 @@ export const SearchCardForm = () => {
           options={CardTypesArr}
         />
 
-        {/* {true === 'SERVICES' && (
-        <>
-          <Controller
-            name='serviceType'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={SERVICE_VALUES.map((value) => ({
-                  value,
-                  label: value,
-                }))}
-                placeholder='Тип услуги'
-                error={errors.serviceType?.message}
-              />
-            )}
-          />
-          <Controller
-            name='experience'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Опыт (лет)'
-                error={errors.experience?.message}
-              />
-            )}
-          />
-          <Controller
-            name='cost'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Стоимость'
-                error={errors.cost?.message}
-              />
-            )}
-          />
-        </>
-      )}
-
-      {true === 'AUTO' && (
-        <>
-          <Controller
-            name='brand'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={CAR_VALUES.map((value) => ({
-                  value,
-                  label: value,
-                }))}
-                placeholder='Марка'
-                error={errors.brand?.message}
-              />
-            )}
-          />
-          <Controller
-            name='model'
-            control={control}
-            render={({ field }) => (
-              <TextField {...field} placeholder='Модель' error={errors.model?.message} />
-            )}
-          />
-          <Controller
-            name='year'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Год выпуска'
-                error={errors.year?.message}
-              />
-            )}
-          />
-        </>
-      )}
-
-     
-      {true === 'REAL_ESTATE' && (
-        <>
-          <Controller
-            name='propertyType'
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                options={PROPERTY_VALUES.map((value) => ({
-                  value,
-                  label: value,
-                }))}
-                placeholder='Тип недвижимости'
-                error={errors.propertyType?.message}
-              />
-            )}
-          />
-          <Controller
-            name='area'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Площадь (м²)'
-                error={errors.area?.message}
-              />
-            )}
-          />
-          <Controller
-            name='rooms'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Количество комнат'
-                error={errors.rooms?.message}
-              />
-            )}
-          />
-          <Controller
-            name='price'
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                type='number'
-                placeholder='Цена'
-                error={errors.price?.message}
-              />
-            )}
-          />
-        </>
-      )} */}
+        <CategoryStep isRequiredRows={false} />
 
         <Button type='submit' variant='contained'>
           Применить фильтры
         </Button>
-        <Button type='submit' variant='contained'>
+        <Button onClick={resetForm} variant='contained'>
           Сбросить фильтры
         </Button>
       </StyledForm>

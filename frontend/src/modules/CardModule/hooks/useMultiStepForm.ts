@@ -26,7 +26,7 @@ export const useMultiStepForm = ({
     values,
     mode: 'onChange',
     resetOptions: {
-      keepIsSubmitted: true,
+      keepIsSubmitSuccessful: true,
     },
   });
 
@@ -38,8 +38,10 @@ export const useMultiStepForm = ({
     try {
       if (data.id) {
         await updateCard.mutateAsync({ ...data, id: data.id });
+        clearFormData(-1);
         clearFormData(data.id);
         resetStep();
+        reset({ name: '' });
       } else {
         await createCard.mutateAsync(data);
         clearFormData(-1);

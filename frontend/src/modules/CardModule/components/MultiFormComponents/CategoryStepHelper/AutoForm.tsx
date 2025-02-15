@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import { CustomSelect } from '@/ui';
 import { CAR_BRANDS } from '@/assets';
 
-export const AutoForm = () => {
+export const AutoForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }) => {
   const { formState, control } = useFormContext<AutoSchema>();
   const { errors } = formState;
 
@@ -21,7 +21,6 @@ export const AutoForm = () => {
       <Controller
         name='model'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <TextField
             {...field}
@@ -46,19 +45,21 @@ export const AutoForm = () => {
         )}
       />
 
-      <Controller
-        name='mileage'
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label='Пробег (км) не обязательное поле'
-            type='number'
-            error={!!errors.mileage}
-            helperText={errors.mileage?.message?.toString()}
-          />
-        )}
-      />
+      {isRequiredRows && (
+        <Controller
+          name='mileage'
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label='Пробег (км) не обязательное поле'
+              type='number'
+              error={!!errors.mileage}
+              helperText={errors.mileage?.message?.toString()}
+            />
+          )}
+        />
+      )}
     </>
   );
 };

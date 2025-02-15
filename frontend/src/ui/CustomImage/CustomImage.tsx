@@ -1,6 +1,7 @@
 import { Box, SxProps, Theme } from '@mui/material';
 import styled from '@emotion/styled';
 import NoPhoto from '/NoPhoto.png';
+import React from 'react';
 
 interface CustomImageProps {
   src?: string | undefined;
@@ -21,6 +22,7 @@ const StyledImageContainer = styled(Box)<{
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: ${({ width }) => (typeof width === 'number' ? `${width}px` : width || '100%')};
+  height: ${({ height }) => (typeof height === 'number' ? `${height}px` : height || 'auto')};
   aspect-ratio: 1 / 1;
 `;
 
@@ -31,11 +33,18 @@ const StyledImage = styled.img`
 `;
 
 export const CustomImage: React.FC<CustomImageProps> = ({ src, width, height, alt, sx }) => {
+  const [imageSrc, setImageSrc] = React.useState(src?.trim() ? src : NoPhoto);
+
+  const handleImageError = () => {
+    setImageSrc(NoPhoto);
+  };
+
   return (
     <StyledImageContainer width={width} height={height} sx={sx}>
       <StyledImage
-        src={src?.trim() ? src : NoPhoto}
-        alt={src?.trim() ? alt || 'Нету фото' : 'Нету фото'}
+        src={imageSrc}
+        onError={handleImageError}
+        alt={imageSrc === NoPhoto ? 'Нету фото' : alt || 'Изображение'}
       />
     </StyledImageContainer>
   );

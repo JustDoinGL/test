@@ -13,7 +13,6 @@ export const BaseStep = () => {
       <Controller
         name='name'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <TextField
             {...field}
@@ -28,7 +27,6 @@ export const BaseStep = () => {
       <Controller
         name='description'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <TextField
             {...field}
@@ -44,7 +42,6 @@ export const BaseStep = () => {
       <Controller
         name='location'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <TextField
             {...field}
@@ -59,7 +56,6 @@ export const BaseStep = () => {
       <Controller
         name='photo'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <TextField
             {...field}
