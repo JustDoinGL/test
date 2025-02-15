@@ -17,6 +17,7 @@ export const BaseStep = () => {
           <TextField
             {...field}
             multiline
+            defaultValue={null}
             label='Название'
             error={!!errors.name}
             helperText={errors.name?.message?.toString()}
@@ -30,6 +31,7 @@ export const BaseStep = () => {
         render={({ field }) => (
           <TextField
             {...field}
+            defaultValue={null}
             multiline
             label='Описание'
             minRows={3}
@@ -46,6 +48,7 @@ export const BaseStep = () => {
           <TextField
             {...field}
             multiline
+            defaultValue={null}
             label='Локация'
             error={!!errors.location}
             helperText={errors.location?.message?.toString()}
@@ -60,6 +63,7 @@ export const BaseStep = () => {
           <TextField
             {...field}
             multiline
+            defaultValue={null}
             label='Фото (URL) необязательное поле'
             error={!!errors.photo}
             helperText={errors.photo?.message?.toString()}

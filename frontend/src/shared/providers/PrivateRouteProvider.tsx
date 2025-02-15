@@ -1,0 +1,22 @@
+import { CustomSpinner } from '@/ui';
+import { Box } from '@mui/material';
+import { Navigate, Outlet } from 'react-router';
+import { useCheckAuth } from 'src/modules/AuthModule';
+
+export const PrivateRouteProvider = () => {
+  const { isLoading, isSuccess, isError } = useCheckAuth();
+
+  if (isLoading) {
+    return (
+      <Box sx={{ height: '90vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <CustomSpinner size={100} />
+      </Box>
+    );
+  }
+
+  if (isError || !isSuccess) {
+    return <Navigate to='/auth' replace />;
+  }
+
+  return <Outlet />;
+};

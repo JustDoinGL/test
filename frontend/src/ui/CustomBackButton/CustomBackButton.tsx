@@ -4,13 +4,14 @@ import { Button } from '@mui/material';
 
 interface CustomBackButtonProps {
   label?: string;
+  step?: number;
 }
 
-export const CustomBackButton = ({ label = 'Назад' }: CustomBackButtonProps) => {
+export const CustomBackButton = ({ label = 'Назад', step = -1 }: CustomBackButtonProps) => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1);
+    navigate(step);
   };
 
   return (

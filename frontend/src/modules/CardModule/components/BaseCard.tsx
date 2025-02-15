@@ -6,13 +6,13 @@ import { PATHS } from '@/assets';
 import { CardDto } from '../types/cardDto';
 
 const StyledCard = styled(Card)(() => ({
-  margin: '0 10px',
+  margin: 0,
+  width: '100%',
   padding: '10px',
   borderRadius: 12,
   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
   transition: 'transform 0.2s, box-shadow 0.2s',
   cursor: 'pointer',
-  width: '100%',
   maxWidth: '470px',
   '&:hover': {
     transform: 'translateY(-4px)',

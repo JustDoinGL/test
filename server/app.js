@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
@@ -9,6 +10,7 @@ const ItemTypes = {
 };
 
 const app = express();
+app.use(cors({ origin: 'http://localhost:1000', credentials: true }));
 app.use(bodyParser.json());
 
 let items = [
@@ -80,6 +82,8 @@ let items = [
   },
 ];
 
+const users = [{ id: 1, email: "admin@mail.ru", password: "admin" }];
+
 const makeCounter = () => {
   let count = items.length;
   return () => ++count;
@@ -87,8 +91,56 @@ const makeCounter = () => {
 
 const itemsIdCounter = makeCounter();
 
+const MOCK_TOKEN = "mock-jwt-token"; // Моковый токен
+
+// Middleware для проверки авторизации
+const authenticateToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1]; // Получаем токен из заголовка
+
+  if (token === MOCK_TOKEN) {
+    next(); // Продолжаем выполнение, если токен валиден
+  } else {
+    res.status(401).json({ success: false, message: "Не авторизован" });
+  }
+};
+
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  const user = users.find(
+    (u) => u.email === email && u.password === password
+  );
+  console.log(user)
+  console.log(req.body)
+
+  if (user) {
+    res.json({
+      success: true,
+      token: MOCK_TOKEN,
+      user: { id: user.id, email: user.email },
+    });
+  } else {
+    res.status(401).json({ success: false, message: "Неверные данные" });
+  }
+});
+
+// Ручка для проверки авторизации
+app.get("/check-auth", (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (token === MOCK_TOKEN) {
+    res.json({ success: true, user: { id: 1, username: "admin" } });
+  } else {
+    res.status(401).json({ success: false, message: "Не авторизован" });
+  }
+});
+
+// Ручка для выхода
+app.post("/logout", (req, res) => {
+  res.json({ success: true });
+});
+
 // Создание нового объявления
-app.post("/items", (req, res) => {
+app.post("/items", authenticateToken, (req, res) => {
   const { name, description, location, type, ...rest } = req.body;
 
   // Validate common required fields
@@ -132,10 +184,11 @@ app.post("/items", (req, res) => {
     ...rest,
   };
 
-  items.unshift(item); //Для вставления в начало
+  items.unshift(item); // Для вставления в начало
   res.status(201).json(item);
 });
 
+// Получение списка объявлений
 app.get("/items", (req, res) => {
   const {
     page = 1,
@@ -211,6 +264,7 @@ app.get("/items", (req, res) => {
     items: paginatedItems,
   });
 });
+
 // Получение объявления по его id
 app.get("/items/:id", (req, res) => {
   const item = items.find((i) => i.id === parseInt(req.params.id, 10));
@@ -222,7 +276,7 @@ app.get("/items/:id", (req, res) => {
 });
 
 // Обновление объявления по его id
-app.put("/items/:id", (req, res) => {
+app.put("/items/:id", authenticateToken, (req, res) => {
   const itemId = parseInt(req.params.id, 10); // Преобразуем id в число
   const itemIndex = items.findIndex((i) => i.id === itemId); // Находим индекс элемента
 
@@ -242,7 +296,7 @@ app.put("/items/:id", (req, res) => {
 });
 
 // Удаление объявления по его id
-app.delete("/items/:id", (req, res) => {
+app.delete("/items/:id", authenticateToken, (req, res) => {
   const itemIndex = items.findIndex(
     (i) => i.id === parseInt(req.params.id, 10)
   );

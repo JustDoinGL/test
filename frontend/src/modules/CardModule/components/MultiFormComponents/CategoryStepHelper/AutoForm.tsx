@@ -24,6 +24,7 @@ export const AutoForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }
         render={({ field }) => (
           <TextField
             {...field}
+            defaultValue={null}
             label='Модель'
             error={!!errors.model}
             helperText={errors.model?.message?.toString()}

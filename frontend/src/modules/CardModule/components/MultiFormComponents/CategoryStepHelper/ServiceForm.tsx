@@ -54,6 +54,7 @@ export const ServiceForm = ({ isRequiredRows = true }: { isRequiredRows?: boolea
             <TextField
               {...field}
               label='График работы не обязательное поле'
+              defaultValue={null}
               error={!!errors.schedule}
               helperText={errors.schedule?.message?.toString()}
             />

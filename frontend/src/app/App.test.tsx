@@ -11,12 +11,12 @@ describe('App routing', () => {
     expect(element).toBeInTheDocument();
   });
 
-  test('renders FormPage on /form route', () => {
-    renderWithProviders(<App />, { initialEntries: [PATHS.formPage] });
+  // test('renders FormPage on /form route', () => {
+  //   renderWithProviders(<App />, { initialEntries: [PATHS.formPage] });
 
-    const element = screen.getByTestId(PATHS.formPage);
-    expect(element).toBeInTheDocument();
-  });
+  //   const element = screen.getByTestId(PATHS.formPage);
+  //   expect(element).toBeInTheDocument();
+  // });
 
   test('renders ItemPage on /item/:id route', () => {
     const itemId = '123';

@@ -24,7 +24,8 @@ export const ListPage = () => {
       >
         <Box
           sx={{
-            overflow: 'scroll',
+            overflowY: 'scroll',
+            overflowX: 'hidden',
             maxHeight: 'calc(100vh - 180px)',
             width: '100%',
             maxWidth: '500px',
