@@ -1,5 +1,5 @@
 const express = require("express");
-const cors = require('cors');
+const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 
@@ -10,7 +10,24 @@ const ItemTypes = {
 };
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:1000', credentials: true }));
+
+if (process.env.NODE_ENV === "development") {
+  dotenv.config({ path: "../.env.development" });
+} else {
+  dotenv.config({ path: "../.env.production" });
+}
+
+// Настройка CORS
+const FRONTEND_PORT = process.env.FRONTEND_PORT || 5173;
+
+app.use(
+  cors({
+    origin: `http://localhost:${FRONTEND_PORT}`,
+    credentials: true,
+  })
+);
+
+// Подключение bodyParser для обработки JSON
 app.use(bodyParser.json());
 
 let items = [
@@ -106,11 +123,9 @@ const authenticateToken = (req, res, next) => {
 
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
-  const user = users.find(
-    (u) => u.email === email && u.password === password
-  );
-  console.log(user)
-  console.log(req.body)
+  const user = users.find((u) => u.email === email && u.password === password);
+  console.log(user);
+  console.log(req.body);
 
   if (user) {
     res.json({
@@ -308,16 +323,10 @@ app.delete("/items/:id", authenticateToken, (req, res) => {
   }
 });
 
-if (process.env.NODE_ENV === "development") {
-  dotenv.config({ path: "../.env.development" });
-} else {
-  dotenv.config({ path: "../.env.production" });
-}
+const BACK_PORT = process.env.BACKEND_PORT || 3000;
 
-const PORT = process.env.BACKEND_PORT || 3000;
-
-app.listen(PORT, () => {
+app.listen(BACK_PORT, () => {
   console.log(
-    `Server mode: ${process.env.NODE_ENV} is running on port ${PORT}`
+    `Server mode: ${process.env.NODE_ENV} is running on port ${BACK_PORT}, FRONTEND- ${FRONTEND_PORT}`
   );
 });

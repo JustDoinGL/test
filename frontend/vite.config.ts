@@ -17,14 +17,6 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react(), tsconfigPaths(), removeConsole()],
     server: {
-      proxy: {
-        '/api': {
-          target: backendUrl,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
       watch: {
         usePolling: true,
       },
@@ -33,14 +25,6 @@ export default defineConfig(({ mode }) => {
       port: frontendPort,
     },
     preview: {
-      proxy: {
-        '/api': {
-          target: backendUrl,
-          changeOrigin: true,
-          secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
       watch: {
         usePolling: true,
       },
@@ -49,14 +33,6 @@ export default defineConfig(({ mode }) => {
       port: frontendPort,
     },
     build: {
-      proxy: {
-        '/api': {
-          target: backendUrl,
-          changeOrigin: true,
-          secure: false,
-        },
-      },
-      // port: frontendPort,
       minify: false,
       outDir: 'dist',
       sourcemap: true,
