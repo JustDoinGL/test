@@ -1,5 +1,15 @@
 import { useEffect } from 'react';
-import { Box, Stepper, Step, StepLabel, Typography, Button, Container, Modal } from '@mui/material';
+import {
+  Box,
+  Stepper,
+  Step,
+  StepLabel,
+  Typography,
+  Button,
+  Container,
+  Modal,
+  styled,
+} from '@mui/material';
 import { FormProvider } from 'react-hook-form';
 import { BaseStep, CategoryStep, StepNavigation } from './MultiFormComponents';
 import { useStep, useSaveLocalFormData } from '../hooks';
@@ -10,6 +20,24 @@ import { Link } from 'react-router';
 import { PATHS } from '@/assets';
 
 const steps = ['Основной шаг', 'Дополнительный шаг'];
+
+const StyledForm = styled('form')(() => ({
+  maxWidth: '600px',
+  margin: '0 auto',
+  padding: '20px',
+  border: '5px solid white',
+  borderRadius: '15px',
+  background: 'rgb(11, 20, 31)',
+}));
+
+const StyledStepper = styled(Stepper)(() => ({
+  maxWidth: '600px',
+  margin: '0 auto',
+  padding: '20px',
+  border: '5px solid white',
+  borderRadius: '15px',
+  background: 'rgb(11, 20, 31)',
+}));
 
 type MultiStepFormProps = {
   defaultValues?: CardDto;
@@ -40,40 +68,18 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
   return (
     <>
       <FormProvider {...methods}>
-        <Box
-          onSubmit={handleSubmit(onSubmit)}
-          component='form'
-          sx={{
-            maxWidth: '600px',
-            margin: '0 auto',
-            padding: '20px',
-            border: '5px solid white',
-            borderRadius: '15px',
-            background: 'rgb(11, 20, 31)',
-          }}
-        >
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
           <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
             {isEditing ? 'Редактирование услуги' : 'Создание услуги'}
           </Typography>
 
-          <Stepper
-            activeStep={activeStep}
-            sx={{
-              mb: '15px',
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '10px',
-              '@media (max-width: 440px)': {
-                display: 'none',
-              },
-            }}
-          >
+          <StyledStepper activeStep={activeStep}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
-          </Stepper>
+          </StyledStepper>
 
           <Box>
             {activeStep === 0 && <BaseStep />}
@@ -91,8 +97,9 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
               stepsLength={steps.length}
             />
           </Box>
-        </Box>
+        </StyledForm>
       </FormProvider>
+
       <Modal open={isSubmitSuccessful} onClose={() => {}}>
         <Box
           sx={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}

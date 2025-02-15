@@ -50,7 +50,6 @@ export const SearchCardForm = () => {
   }, [type]);
 
   const onSubmit = (data: SearchFormValues) => {
-    console.log(data);
     setSearchParams(data);
   };
 

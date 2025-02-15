@@ -1,7 +1,7 @@
+import { useCheckAuth } from '@/modules';
 import { CustomSpinner } from '@/ui';
 import { Box } from '@mui/material';
 import { Navigate, Outlet } from 'react-router';
-import { useCheckAuth } from 'src/modules/AuthModule';
 
 export const PrivateRouteProvider = () => {
   const { isLoading, isSuccess, isError } = useCheckAuth();
