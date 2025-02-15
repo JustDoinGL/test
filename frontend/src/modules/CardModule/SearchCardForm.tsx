@@ -21,7 +21,7 @@ const StyledForm = styled('form')(() => ({
   background: 'rgb(11, 20, 31)',
 }));
 
-export const SearchCardForm = () => {
+export const SearchCardForm = ({ setIsOpenModal }: { setIsOpenModal?: () => void }) => {
   const { setSearchParams, searchParams, resetParams } = useCustomSearchParams();
 
   const methods = useForm<SearchFormValues>({
@@ -34,6 +34,18 @@ export const SearchCardForm = () => {
 
   const onSubmit = (data: SearchFormValues) => {
     setSearchParams(data);
+
+    if (setIsOpenModal) {
+      setIsOpenModal();
+    }
+  };
+
+  const resetForm = () => {
+    resetParams();
+
+    if (setIsOpenModal) {
+      setIsOpenModal();
+    }
   };
 
   return (
@@ -54,7 +66,7 @@ export const SearchCardForm = () => {
         <Button type='submit' variant='contained'>
           Применить фильтры
         </Button>
-        <Button onClick={() => resetParams()} variant='contained'>
+        <Button onClick={resetForm} variant='contained'>
           Сбросить фильтры
         </Button>
       </StyledForm>
