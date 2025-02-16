@@ -30,74 +30,7 @@ app.use(
 // Подключение bodyParser для обработки JSON
 app.use(bodyParser.json());
 
-let items = [
-  {
-    id: 1,
-    name: "Квартира в центре города",
-    description: "Просторная квартира с новым ремонтом.",
-    location: "Москва",
-    type: "Недвижимость",
-    propertyType: "Квартира",
-    area: 60,
-    rooms: 2,
-    price: 8000000,
-  },
-  {
-    id: 2,
-    name: "Новый автомобиль",
-    description: "Продается новый автомобиль, пробег 0.",
-    location: "Санкт-Петербург",
-    type: "Авто",
-    brand: "Toyota",
-    model: "Camry",
-    year: 2022,
-    mileage: 0,
-    price: 2500000,
-  },
-  {
-    id: 3,
-    name: "Услуги репетитора",
-    description: "Опытный репетитор по математике и физике.",
-    location: "Казань",
-    type: "Услуги",
-    serviceType: "Репетиторство",
-    experience: 5,
-    cost: 1500,
-  },
-  {
-    id: 4,
-    name: "Просторный дом",
-    description: "Дом с участком 10 соток.",
-    location: "Екатеринбург",
-    type: "Недвижимость",
-    propertyType: "Дом",
-    area: 150,
-    rooms: 5,
-    price: 15000000,
-  },
-  {
-    id: 5,
-    name: "Скутер",
-    description: "Скутер в отличном состоянии.",
-    location: "Москва",
-    type: "Авто",
-    brand: "Honda",
-    model: "Dio",
-    year: 2020,
-    mileage: 5000,
-    price: 70000,
-  },
-  {
-    id: 6,
-    name: "Услуги фотографа",
-    description: "Профессиональная фотосессия.",
-    location: "Нижний Новгород",
-    type: "Услуги",
-    serviceType: "Фотография",
-    experience: 3,
-    cost: 5000,
-  },
-];
+let items = []
 
 const users = [{ id: 1, email: "admin@mail.ru", password: "admin" }];
 

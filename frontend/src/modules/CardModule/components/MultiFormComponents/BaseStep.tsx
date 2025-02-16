@@ -12,13 +12,12 @@ export const BaseStep = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Controller
         name='name'
-        defaultValue=''
+        defaultValue={undefined}
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             multiline
-            defaultValue={null}
             label='Название'
             error={!!errors.name}
             helperText={errors.name?.message?.toString()}
@@ -28,12 +27,11 @@ export const BaseStep = () => {
 
       <Controller
         name='description'
-        defaultValue=''
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
-            defaultValue={null}
             multiline
             label='Описание'
             minRows={3}
@@ -45,13 +43,12 @@ export const BaseStep = () => {
 
       <Controller
         name='location'
-        defaultValue=''
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
             multiline
-            defaultValue={null}
             label='Локация'
             error={!!errors.location}
             helperText={errors.location?.message?.toString()}
@@ -61,13 +58,12 @@ export const BaseStep = () => {
 
       <Controller
         name='photo'
-        defaultValue=''
+        defaultValue={undefined}
         control={control}
         render={({ field }) => (
           <TextField
             {...field}
             multiline
-            defaultValue={null}
             label='Фото (URL) необязательное поле'
             error={!!errors.photo}
             helperText={errors.photo?.message?.toString()}

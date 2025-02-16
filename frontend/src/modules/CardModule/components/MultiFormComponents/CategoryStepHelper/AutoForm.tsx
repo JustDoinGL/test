@@ -21,10 +21,10 @@ export const AutoForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }
       <Controller
         name='model'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
-            defaultValue={null}
             label='Модель'
             error={!!errors.model}
             helperText={errors.model?.message?.toString()}
@@ -35,6 +35,7 @@ export const AutoForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }
       <Controller
         name='year'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
@@ -50,6 +51,7 @@ export const AutoForm = ({ isRequiredRows = true }: { isRequiredRows?: boolean }
         <Controller
           name='mileage'
           control={control}
+          defaultValue={undefined}
           render={({ field }) => (
             <TextField
               {...field}

@@ -21,6 +21,7 @@ export const RealEstateForm = () => {
       <Controller
         name='area'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
@@ -35,6 +36,7 @@ export const RealEstateForm = () => {
       <Controller
         name='rooms'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}

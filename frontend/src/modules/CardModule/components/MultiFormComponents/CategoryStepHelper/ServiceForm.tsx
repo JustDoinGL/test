@@ -21,6 +21,7 @@ export const ServiceForm = ({ isRequiredRows = true }: { isRequiredRows?: boolea
       <Controller
         name='experience'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
@@ -35,6 +36,7 @@ export const ServiceForm = ({ isRequiredRows = true }: { isRequiredRows?: boolea
       <Controller
         name='cost'
         control={control}
+        defaultValue={undefined}
         render={({ field }) => (
           <TextField
             {...field}
@@ -50,11 +52,11 @@ export const ServiceForm = ({ isRequiredRows = true }: { isRequiredRows?: boolea
         <Controller
           name='schedule'
           control={control}
+          defaultValue={undefined}
           render={({ field }) => (
             <TextField
               {...field}
               label='График работы не обязательное поле'
-              defaultValue={null}
               error={!!errors.schedule}
               helperText={errors.schedule?.message?.toString()}
             />
