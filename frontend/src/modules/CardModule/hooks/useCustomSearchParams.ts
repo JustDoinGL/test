@@ -58,8 +58,8 @@ export const useCustomSearchParams = () => {
       });
       setSearchParams(updatedParams);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+
+    [searchParams, setSearchParams]
   );
 
   // Сброс парметров для формы без учета поиска(q)
@@ -72,6 +72,7 @@ export const useCustomSearchParams = () => {
     }
 
     setSearchParams(newSearchParams);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
