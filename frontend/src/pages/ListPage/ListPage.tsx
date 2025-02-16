@@ -1,10 +1,12 @@
 import { PATHS } from '@/assets';
 import { CardsInfinityScroll, SearchCardInput, SearchCardForm } from '@/modules';
+import { useScrollPosition } from '@/shared';
 import { Box, useMediaQuery, useTheme } from '@mui/material';
 
 export const ListPage = () => {
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const containerRef = useScrollPosition('cards-scroll-position');
 
   return (
     <Box
@@ -24,12 +26,12 @@ export const ListPage = () => {
       >
         <Box
           sx={{
-            overflowY: 'scroll',
-            overflowX: 'hidden',
+            overflowY: 'auto',
             maxHeight: 'calc(100vh - 180px)',
             width: '100%',
             maxWidth: '500px',
           }}
+          ref={containerRef}
         >
           <CardsInfinityScroll />
         </Box>

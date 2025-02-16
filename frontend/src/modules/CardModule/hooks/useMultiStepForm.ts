@@ -41,10 +41,11 @@ export const useMultiStepForm = ({
         resetStep();
       } else {
         await createCard.mutateAsync(data);
-        clearFormData(-1);
+        reset({ name: undefined });
         resetStep();
-        reset({ name: '' });
+        clearFormData(-1);
       }
+
       setIsOpenModal(true);
     } catch (error) {
       if (error instanceof Error) {

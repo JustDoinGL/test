@@ -12,6 +12,7 @@ export const BaseStep = () => {
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <Controller
         name='name'
+        defaultValue=''
         control={control}
         render={({ field }) => (
           <TextField
@@ -27,6 +28,7 @@ export const BaseStep = () => {
 
       <Controller
         name='description'
+        defaultValue=''
         control={control}
         render={({ field }) => (
           <TextField
@@ -43,6 +45,7 @@ export const BaseStep = () => {
 
       <Controller
         name='location'
+        defaultValue=''
         control={control}
         render={({ field }) => (
           <TextField
@@ -58,6 +61,7 @@ export const BaseStep = () => {
 
       <Controller
         name='photo'
+        defaultValue=''
         control={control}
         render={({ field }) => (
           <TextField

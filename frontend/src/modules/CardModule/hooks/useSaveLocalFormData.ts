@@ -10,6 +10,7 @@ const localStorageKey = 'formDataGithub@JustDoinGL';
  */
 export const useSaveLocalFormData = (apiData?: CardDto) => {
   const [formData, setFormData] = useState<CardDto | undefined>(apiData);
+  const [isSavedData, setIsSavedData] = useState(false);
 
   // Функция для получения ключа localStorage на основе ID
   const getStorageKey = (id: number): string => {
@@ -20,10 +21,12 @@ export const useSaveLocalFormData = (apiData?: CardDto) => {
     const id = apiData?.id;
     const storageKey = getStorageKey(typeof id === 'number' ? id : -1); // Из-за того что id может быть равен 0
     const savedData = localStorage.getItem(storageKey);
+    setIsSavedData(false);
 
     if (savedData) {
       const parsedData = JSON.parse(savedData) as CardDto;
       setFormData(parsedData);
+      setIsSavedData(true);
     } else if (apiData) {
       setFormData(apiData);
     }
@@ -57,11 +60,13 @@ export const useSaveLocalFormData = (apiData?: CardDto) => {
   const clearFormData = (id: number) => {
     const storageKey = getStorageKey(id);
     localStorage.removeItem(storageKey);
+    setIsSavedData(false);
   };
 
   return {
     formData,
     saveFormData,
     clearFormData,
+    isSavedData,
   };
 };

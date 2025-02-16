@@ -56,7 +56,8 @@ type MultiStepFormProps = {
 export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { activeStep, handleNext, handleBack, resetStep } = useStep();
-  const { formData, saveFormData, clearFormData } = useSaveLocalFormData(defaultValues);
+  const { formData, saveFormData, clearFormData, isSavedData } =
+    useSaveLocalFormData(defaultValues);
   const { methods, onSubmit } = useMultiStepForm({
     clearFormData,
     activeStep,
@@ -74,13 +75,18 @@ export const MultiStepForm = ({ defaultValues, isEditing }: MultiStepFormProps) 
     });
 
     return () => subscription.unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [saveFormData, watch]);
 
   return (
     <>
       <FormProvider {...methods}>
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
+          {isSavedData && (
+            <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
+              Даннные взяты из черновика
+            </Typography>
+          )}
+
           <Typography component='h4' sx={{ mb: '20px', fontSize: '30px' }}>
             {isEditing ? 'Редактирование услуги' : 'Создание услуги'}
           </Typography>
