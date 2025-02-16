@@ -12,7 +12,7 @@ function App() {
         <Route path={PATHS.mainPage} element={<ListPage />} />
         <Route path={`${PATHS.itemPage}/:id`} element={<ItemPage />} />
 
-        <Route path={'/auth'} element={<AuthProvider />}>
+        <Route path={PATHS.auth} element={<AuthProvider />}>
           <Route index element={<AuthPage />} />
         </Route>
 

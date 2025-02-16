@@ -36,7 +36,7 @@ export const CustomModal = ({ open, onClose, children }: CustomModalProps) => {
       aria-labelledby='modal-title'
       aria-describedby='modal-description'
     >
-      <Box sx={modalStyle(isMobile)}>
+      <Box sx={modalStyle(isMobile)} data-testid='custom-modal-box'>
         <Box
           sx={{
             display: 'flex',

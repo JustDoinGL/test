@@ -1,3 +1,4 @@
+import { PATHS } from '@/assets';
 import { useCheckAuth } from '@/modules';
 import { CustomSpinner } from '@/ui';
 import { Box } from '@mui/material';
@@ -15,7 +16,7 @@ export const PrivateRouteProvider = () => {
   }
 
   if (isError || !isSuccess) {
-    return <Navigate to='/auth' replace />;
+    return <Navigate to={PATHS.auth} replace />;
   }
 
   return <Outlet />;

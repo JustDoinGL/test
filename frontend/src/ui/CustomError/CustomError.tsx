@@ -24,7 +24,7 @@ const StyledBox = styled(Box)<{ type: 'info' | 'warning' | 'error' }>`
 
 export const CustomError = ({ errorText, errorType = 'error', sx }: CustomErrorProps) => {
   return (
-    <StyledBox type={errorType} sx={sx}>
+    <StyledBox type={errorType} sx={sx} data-testId='custom-error-box'>
       {errorType === 'error' && (
         <Typography variant='h6'>
           Очень жаль, произошла ошибка, попробуйте позже или перезагрузите страницу.

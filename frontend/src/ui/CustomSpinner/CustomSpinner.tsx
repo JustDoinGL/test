@@ -6,5 +6,5 @@ type CustomSpinnerProps = {
 };
 
 export const CustomSpinner = ({ size = 40, color = 'primary' }: CustomSpinnerProps) => {
-  return <CircularProgress size={size} color={color} />;
+  return <CircularProgress data-testid='customSpinner' size={size} color={color} />;
 };

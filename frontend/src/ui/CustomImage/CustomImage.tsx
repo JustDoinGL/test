@@ -40,7 +40,12 @@ export const CustomImage: React.FC<CustomImageProps> = ({ src, width, height, al
   };
 
   return (
-    <StyledImageContainer width={width} height={height} sx={sx}>
+    <StyledImageContainer
+      width={width}
+      height={height}
+      sx={sx}
+      data-testid='custom-image-container'
+    >
       <StyledImage
         src={imageSrc}
         onError={handleImageError}
