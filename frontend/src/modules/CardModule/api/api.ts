@@ -38,7 +38,7 @@ export const cardListApi = {
     const queryString = params.toString();
 
     return infiniteQueryOptions({
-      queryKey: [cardListApi.baseKey, 'list'],
+      queryKey: [cardListApi.baseKey, 'list', queryString],
       queryFn: (meta) =>
         jsonApiInstance<PaginatedResult<CardDto>>(
           `/items?page=${meta.pageParam}&limit=5&${queryString}`,

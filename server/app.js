@@ -30,7 +30,7 @@ app.use(
 // Подключение bodyParser для обработки JSON
 app.use(bodyParser.json());
 
-let items = []
+let items = [];
 
 const users = [{ id: 1, email: "admin@mail.ru", password: "admin" }];
 
@@ -57,8 +57,8 @@ const authenticateToken = (req, res, next) => {
 app.post("/login", (req, res) => {
   const { email, password } = req.body;
   const user = users.find((u) => u.email === email && u.password === password);
-  console.log(user);
-  console.log(req.body);
+  // console.log(user);
+  // console.log(req.body);
 
   if (user) {
     res.json({
@@ -131,7 +131,7 @@ app.post("/items", authenticateToken, (req, res) => {
     type,
     ...rest,
   };
-
+  console.log("/create");
   items.unshift(item); // Для вставления в начало
   res.status(201).json(item);
 });
@@ -151,7 +151,7 @@ app.get("/items", (req, res) => {
     rooms,
     price,
   } = req.query;
-
+  console.log("/items");
   const startIndex = (Number(page) - 1) * Number(limit);
   const endIndex = Number(page) * Number(limit);
 
@@ -237,8 +237,8 @@ app.put("/items/:id", authenticateToken, (req, res) => {
   const updatedItem = { ...items[itemIndex], ...req.body }; // Создаем новый объект с обновленными данными
   items[itemIndex] = updatedItem; // Заменяем старый объект на новый
 
-  console.log("Updated item:", updatedItem); // Логируем обновленный элемент
-  console.log("All items:", items); // Логируем весь список элементов
+  // console.log("Updated item:", updatedItem); // Логируем обновленный элемент
+  // console.log("All items:", items); // Логируем весь список элементов
 
   res.json(updatedItem); // Возвращаем обновленный элемент
 });
